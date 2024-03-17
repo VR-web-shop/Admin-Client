@@ -1,7 +1,10 @@
 <script setup>
-import AuthSDK from '@vr-web-shop/auth'
+import { useToast } from '../composables/useToast.js';
+import { useAuthSDK } from '../composables/useAuthSDK.js';
+import { ref, onMounted } from 'vue'
+import Login from '../components/Login.vue'
 
-
+/*
 (async () => {
     const sdk = new AuthSDK(`http://localhost:3000`)
     const { api, requests } = sdk
@@ -37,8 +40,11 @@ import AuthSDK from '@vr-web-shop/auth'
     }, 222)
     const res4 = await api.users.destroy(req3)
     console.log(res4)
-})()
+})()*/
 </script>
 
 <template>
+    <div class="p-3">
+        Test
+    </div>
 </template>
