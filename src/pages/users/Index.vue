@@ -40,7 +40,9 @@
                                 <td class="text-center">{{ user.created_at }}</td>
                                 <td class="text-center">{{ user.updated_at }}</td>
                                 <td class="text-center">
-                                    <router-link :to="'/users/' + user.uuid" class="text-blue-500">View</router-link>
+                                    <RestrictedElement :permissions="['users:show']">
+                                        <router-link :to="'/users/' + user.uuid" class="text-blue-500">View</router-link>
+                                    </RestrictedElement>
                                 </td>
                             </tr>
                         </tbody>

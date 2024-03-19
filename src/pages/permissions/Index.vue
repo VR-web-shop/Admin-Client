@@ -36,8 +36,11 @@
                                 <td class="text-left">{{ permission.description }}</td>
                                 <td class="text-center">{{ permission.is_user_defined }}</td>
                                 <td class="text-center">
-                                    <router-link :to="'/permissions/' + permission.name"
-                                        class="text-blue-500">View</router-link>
+                                    <RestrictedElement :permissions="['permissions:show']">
+                                        <router-link 
+                                            :to="'/permissions/' + permission.name"
+                                            class="text-blue-500">View</router-link>
+                                    </RestrictedElement>
                                 </td>
                             </tr>
                         </tbody>

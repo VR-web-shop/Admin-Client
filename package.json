@@ -9,7 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vr-web-shop/auth": "1.0.33",
+    "@vr-web-shop/auth": "1.0.38",
+    "@vr-web-shop/products": "1.0.8",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

@@ -37,7 +37,9 @@
                                 <td class="text-left">{{ role.description }}</td>
                                 <td class="text-center">{{ role.is_user_defined }}</td>
                                 <td class="text-center">
-                                    <router-link :to="'/roles/' + role.name" class="text-blue-500">View</router-link>
+                                    <RestrictedElement :permissions="['roles:show']">
+                                        <router-link :to="'/roles/' + role.name" class="text-blue-500">View</router-link>
+                                    </RestrictedElement>
                                 </td>
                             </tr>
                         </tbody>
