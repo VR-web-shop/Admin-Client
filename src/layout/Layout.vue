@@ -3,29 +3,39 @@ import Menu from '../layout/Menu.vue';
 import Toast from '../components/Toast.vue';
 import { useToast } from '../composables/useToast.js';
 import { useAuthSDK } from '../composables/useAuthSDK.js';
+import { usePermission } from '../composables/usePermission.js';
 import { ref, onMounted } from 'vue'
 import Login from '../components/Login.vue'
 
 const toastCtrl = useToast()
 
 const loginRef = ref()
-const loginShow = ref(true)
 
 const { sdk, authenticated } = useAuthSDK()
 
+function checkAccess() {
+  const access = usePermission('admin:client:access');
+  if (!access) {
+    authenticated.value = false
+    sdk.token.remove();
+    toastCtrl.add('You do not have access to the admin client', 5000, 'error')
+  } else {
+    authenticated.value = true
+    toastCtrl.add('Login successful', 5000, 'success')
+  }
+}
+
 onMounted(async () => {
     try { 
-      await sdk.api.users.findMe() 
-      authenticated.value = true
-    }
-    catch (e) { 
+      await sdk.api.users.findMe()
+      checkAccess();
+    } catch (e) { 
       authenticated.value = false
     }
 })
 
 async function loginComplete() {
-    authenticated.value = true
-    toastCtrl.add('Login successful', 5000, 'success')
+    checkAccess();
 }
 </script>
 

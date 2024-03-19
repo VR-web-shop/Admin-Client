@@ -1,50 +1,86 @@
 <script setup>
+import FlexCenter from '../components/UI/FlexCenter.vue';
+import Button from '../components/UI/Button.vue';
 import { useToast } from '../composables/useToast.js';
 import { useAuthSDK } from '../composables/useAuthSDK.js';
-import { ref, onMounted } from 'vue'
-import Login from '../components/Login.vue'
+import { computed, onMounted } from 'vue'
+import { router } from '../router.js'
 
-/*
-(async () => {
-    const sdk = new AuthSDK(`http://localhost:3000`)
-    const { api, requests } = sdk
-    const { authentication } = api
-    const req = new requests.AuthRequest.CreateRequest({
-        email: 'admin@example.com',
-        password: '12345678',
-    })
-    const res = await authentication.login(req)
-    const res2 = await authentication.refresh()
-    console.log(res.access_token, res2.access_token)
+const { sdk, authenticated } = useAuthSDK()
 
-    const me = await api.users.findMe()
-    console.log(me)
-    const randomNum = Math.floor(Math.random() * 100000)
-    const req2 = new requests.UserRequest.CreateRequest({
-        email: `t${randomNum}22t@t22tt.dk`,
-        password: '12345678',
+const menuItems = [
+    { 
+        title: 'Manage Users',
+        description: 'Find, create, update, and delete users',
+        method: () => router.push('/users'), 
+        permission: 'users:index' 
+    },
+    { 
+        title: 'Manage Roles', 
+        description: 'Find, create, update, and delete roles',
+        method: () => router.push('/roles'), 
+        permission: 'roles:index' 
+    },
+    { 
+        title: 'Manage Permissions', 
+        description: 'Find, create, update, and delete permissions',
+        method: () => router.push('/permissions'), 
+        permission: 'permissions:index' 
+    },
+    { 
+        title: 'Manage Products', 
+        description: 'Find, create, update, and delete products',
+        method: () => router.push('/products'), 
+        permission: 'products:index' 
+    },
+    { 
+        title: 'Manage Product Entities', 
+        description: 'Find, create, update, ship, etc. products entities',
+        method: () => router.push('/product_entities'),
+        permission: 'product-entities:index' 
+    },
+    { 
+        title: 'Manage Product Entity States', 
+        description: 'Find product entity states',
+        method: () => router.push('/product_entity_states'),
+        permission: 'product-entity-states:index' 
+    },
+]
+
+const filteredMenuItems = computed(() => {
+    return menuItems.filter((item) => {
+        const { permission } = item
+        if (permission) {
+            return sdk.api.users.hasPermission(permission)
+        }
+        return true
     })
-    const res3 = await api.users.create(req2)
-    const me2 = await api.users.findMe()
-    const req4 = new requests.UserRequest.UpdateRequest({
-        email: `tt${randomNum}44@.sdf`,
-        password: '12345678',
-        new_password: '123456789',
-    }, 222)
-    const areq4 = await api.users.update(req4)
-    console.log(me2)
-    console.log(res3)
-    console.log(areq4)
-    const req3 = new requests.UserRequest.DeleteRequest({
-        password: '123456789',
-    }, 222)
-    const res4 = await api.users.destroy(req3)
-    console.log(res4)
-})()*/
+})
+
 </script>
 
 <template>
-    <div class="p-3">
-        Test
-    </div>
+    <FlexCenter>
+        <div class="m-10 p-3 w-full shadow-md bg-white rounded">
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl font-bold">
+                    Control Panel
+                </h1>
+            </div>
+
+            <p class="mb-3 text-sm">
+                Welcome to the control panel. <br /> 
+                Find the menu items below to manage your application.
+            </p>
+
+            <div class="grid grid-cols-3 gap-3">
+                <div v-for="item in filteredMenuItems" :key="item.title" @click="item.method">
+                    <button class="text-left border border-gray-300 p-3 rounded shadow-sm bg-gray-200 hover:bg-gray-100 w-full">
+                        <p class="text-md font-bold">{{ item.title }}</p>
+                        <p class="text-xs">{{ item.description }}</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </FlexCenter>
 </template>

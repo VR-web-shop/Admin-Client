@@ -1,32 +1,30 @@
 <template>
-    <Restricted :permissions="['users:create']">
+    <Restricted :permissions="['roles:create']">
         <Content :links="[
             { name: 'Control Panel', path: '/' },
-            { name: 'Users', path: '/users' },
+            { name: 'Roles', path: '/roles' },
             { name: 'Create' }
         ]">
             <template v-slot:header>
-                <h1 class="text-xl font-bold">
-                    Create User
+                <h1 class="text-2xl font-bold mb-3">
+                    Create Role
                 </h1>
             </template>
-
+            
             <p class="mb-3">
-                Use the form below to create a new user to create new users
-                for employees or regular users for customers.
+                Use the form below to create a new role with different permissions than existing roles.
             </p>
-
+            
             <Form ref="formRef" :submit="submit" />
         </Content>
-    </Restricted>
+    </Restricted>    
 </template>
 
 <script setup>
-import Content from '../../components/UI/Content.vue';
 import Restricted from '../../components/UI/Restricted.vue';
+import Content from '../../components/UI/Content.vue';
 import Form from './Form.vue';
-import { ref } from 'vue';
-import { router } from '../../router.js';
+import { ref, toRaw } from 'vue';
 import { useAuthSDK } from '../../composables/useAuthSDK.js';
 import { useToast } from '../../composables/useToast.js';
 
@@ -34,14 +32,10 @@ const formRef = ref(null);
 
 async function submit(data) {
     const { sdk } = useAuthSDK();
-    const { api, requests } = sdk;
-    const { adminUsers } = api;
-    const { UserRequest } = requests;
-
-    const req = new UserRequest.AdminCreateRequest(data);
-    await adminUsers.create(req);
+    const req = new sdk.requests.RoleRequest.AdminCreateRequest(data);
+    await sdk.api.adminRoles.create(req);
     const toastCtrl = useToast();
-    toastCtrl.add('User created', 5000, 'success');
+    toastCtrl.add('Role created', 5000, 'success');
     formRef.value.reset();
 }
 </script>

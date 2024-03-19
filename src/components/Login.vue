@@ -1,6 +1,6 @@
 <template>
     <FlexCenter class="h-screen">
-        <div v-if="!showIntro">
+        <div v-if="!showIntro" class="bg-white p-3 rounded border border-gray-300 shadow-md">
             <Title>Login</Title>
             <form @submit.prevent="submit">
 
