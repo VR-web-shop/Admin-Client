@@ -45,6 +45,14 @@ const menuItems = [
         method: () => router.push('/product_entity_states'),
         permission: 'product-entity-states:index' 
     },
+    { 
+        title: 'Manage 3D Scenes', 
+        description: 'Find product entity states',
+        method: () => {
+            window.open('http://localhost:5174', '_blank')
+        },
+        permission: 'scenes-editor:client:access' 
+    },
 ]
 
 const filteredMenuItems = computed(() => {

@@ -29,6 +29,7 @@ const isActive = (path) => {
 
 const menuItems = [
     { title: 'Control Panel', method: () => router.push('/'), path: '/'},
+    { title: 'Customer Website', method: () => window.open('http://localhost:5173', '_blank')},
     { title: 'Logout', method: logout },
 ]
 
