@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "@vr-web-shop/auth": "1.0.38",
-    "@vr-web-shop/products": "1.0.10",
-    "@vr-web-shop/billing": "1.0.1",
+    "@vr-web-shop/products": "1.0.12",
     "@vr-web-shop/shopping-cart": "1.0.2",
     "@vr-web-shop/scenes": "1.0.2",
     "vue": "^3.4.21",

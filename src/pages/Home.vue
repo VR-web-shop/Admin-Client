@@ -35,7 +35,7 @@ const menuItems = [
     },
     { 
         title: 'Manage Product Entities', 
-        description: 'Find, create, update, ship, etc. products entities',
+        description: 'Find, create, update, ship, etc. product entities',
         method: () => router.push('/product_entities'),
         permission: 'product-entities:index' 
     },
@@ -44,6 +44,36 @@ const menuItems = [
         description: 'Find product entity states',
         method: () => router.push('/product_entity_states'),
         permission: 'product-entity-states:index' 
+    },
+    { 
+        title: 'Manage Product Orders', 
+        description: 'Find, update, and delete product orders',
+        method: () => router.push('/product_orders'), 
+        permission: 'product-orders:index' 
+    },
+    { 
+        title: 'Manage Product Order Entities', 
+        description: 'Find, create, update, ship, etc. product order entities',
+        method: () => router.push('/product_order_entities'),
+        permission: 'product-order-entities:index' 
+    },
+    { 
+        title: 'Manage Product Order States', 
+        description: 'Find product order states',
+        method: () => router.push('/product_order_states'),
+        permission: 'product-order-states:index' 
+    },
+    { 
+        title: 'Manage Deliver options', 
+        description: 'Find deliver options',
+        method: () => router.push('/deliver_options'),
+        permission: 'deliver-options:index' 
+    },
+    { 
+        title: 'Manage Payment options', 
+        description: 'Find payment options',
+        method: () => router.push('/payment_options'),
+        permission: 'payment-options:index' 
     },
     { 
         title: 'Manage 3D Scenes', 

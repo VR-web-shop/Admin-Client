@@ -31,6 +31,21 @@ import ShowProductEntity from './pages/product_entities/Show.vue'
 import IndexProductEntityState from './pages/product_entity_states/Index.vue'
 import ShowProductEntityState from './pages/product_entity_states/Show.vue'
 
+import IndexProductOrder from './pages/product_orders/Index.vue'
+import ShowProductOrder from './pages/product_orders/Show.vue'
+
+import IndexProductOrderEntity from './pages/product_order_entities/Index.vue'
+import ShowProductOrderEntity from './pages/product_order_entities/Show.vue'
+
+import IndexProductOrderState from './pages/product_order_states/Index.vue'
+import ShowProductOrderState from './pages/product_order_states/Show.vue'
+
+import IndexDeliverOption from './pages/deliver_options/Index.vue'
+import ShowDeliverOption from './pages/deliver_options/Show.vue'
+
+import IndexPaymentOption from './pages/payment_options/Index.vue'
+import ShowPaymentOption from './pages/payment_options/Show.vue'
+
 const routes = [
     { path: '/', component: Home },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
@@ -62,6 +77,21 @@ const routes = [
 
     { path: '/product_entity_states', component: IndexProductEntityState, name: 'product_entity_states' },
     { path: '/product_entity_states/:name', component: ShowProductEntityState, name: 'product_entity_states.show' },
+
+    { path: '/product_orders', component: IndexProductOrder, name: 'product_orders' },
+    { path: '/product_orders/:uuid', component: ShowProductOrder, name: 'product_orders.show' },
+
+    { path: '/product_order_entities', component: IndexProductOrderEntity, name: 'product_order_entities' },
+    { path: '/product_order_entities/:uuid', component: ShowProductOrderEntity, name: 'product_order_entities.show' },
+
+    { path: '/product_order_states', component: IndexProductOrderState, name: 'product_order_states' },
+    { path: '/product_order_states/:name', component: ShowProductOrderState, name: 'product_order_states.show' },
+
+    { path: '/deliver_options', component: IndexDeliverOption, name: 'deliver_options' },
+    { path: '/deliver_options/:name', component: ShowDeliverOption, name: 'deliver_options.show' },
+
+    { path: '/payment_options', component: IndexPaymentOption, name: 'payment_options' },
+    { path: '/payment_options/:name', component: ShowPaymentOption, name: 'payment_options.show' },
 ]
 
 export const router = createRouter({
