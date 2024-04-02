@@ -11,11 +11,16 @@
                 </h1>
             </template>
             
-            <Paginator 
-                :request="sdk.requests.ProductEntityStateRequest.FindAllRequest" 
-                :findAllMethod="sdk.api.productEntityStates.findAll"
-                :entitiesKey="'product_entity_states'">
-                <template v-slot="{ entities }">
+            <MeteorPaginator 
+                :findAllMethod="sdk.api.ProductEntityStateController.findAll"
+                :limit="10">
+                <template #empty?>
+                    <div class="text-center text-gray-500">
+                        No product entity states found.
+                    </div>
+                </template>
+
+                <template #default="{ entities }">
                     <table class="w-full border-l border-r border-gray-100">
                         <thead>
                             <tr class="border-b border-t border-gray-100">
@@ -36,13 +41,13 @@
                     </table>
 
                 </template>
-            </Paginator>
+            </MeteorPaginator>
         </Content>
     </Restricted>
 </template>
 <script setup>
 import Content from '../../components/UI/Content.vue';
-import Paginator from '../../components/UI/Paginator.vue';
+import MeteorPaginator from '../../components/UI/MeteorPaginator.vue';
 import Restricted from '../../components/UI/Restricted.vue';
 import RestrictedElement from '../../components/UI/RestrictedElement.vue';
 import { useProductSDK } from '../../composables/useProductSDK.js';

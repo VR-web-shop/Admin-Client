@@ -3,7 +3,7 @@
         <Content :links="[
         { name: 'Control Panel', path: '/' },
         { name: 'Products', path: '/products' },
-        { name: product?.uuid, path: '/products/' + product?.uuid },
+        { name: uuid, path: '/products/' + uuid },
         { name: 'Update' }
     ]">
             <template v-slot:header>
@@ -19,12 +19,12 @@
             <div>
                 <Form 
                     ref="formRef" 
-                    buttonText="Update" 
-                    :nameInitialValue="product?.name"
-                    :descriptionInitialValue="product?.description"
+                    buttonText="Update"
                     :submit="submit" 
                     :validateInput="false" 
-                />
+                >
+                    <input type="hidden" :value="uuid" name="uuid" />
+                </Form>
             </div>
         </Content>
     </Restricted>
@@ -40,32 +40,20 @@ import { useToast } from '../../composables/useToast.js';
 import { router } from '../../router.js';
 
 const formRef = ref();
-const product = ref(null)
 const uuid = router.currentRoute.value.params.uuid
-
+const toastCtrl = useToast();
 const { sdk } = useProductSDK();
-const { api, requests } = sdk
-const { products } = api
-const { ProductRequest } = requests
 
 async function fetchProduct() {
-    const req = new ProductRequest.FindRequest({ uuid })
-    const res = await products.find(req)
-    product.value = res
+    const res = await sdk.api.ProductController.find({ uuid })
     formRef.value.setProduct(res)
 }
 
-async function submit(data) {
-    const req = new ProductRequest.UpdateRequest({ uuid, ...data });
-    await products.update(req);
-    const toastCtrl = useToast();
+async function submit(formData) {
+    const res = await sdk.api.ProductController.update(formData);
+    formRef.value.setProduct(res)
     toastCtrl.add('Product updated', 5000, 'success');
-
-    formRef.value.reset();
-    await fetchProduct()
 }
 
-onBeforeMount(async () => {
-    await fetchProduct()
-})
+onBeforeMount(async () => await fetchProduct())
 </script>

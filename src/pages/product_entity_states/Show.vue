@@ -31,8 +31,7 @@ const productEntityState = ref(null)
 
 onBeforeMount(async () => {
     const name = router.currentRoute.value.params.name
-    const req = new sdk.requests.ProductEntityStateRequest.FindRequest({ name })
-    const res = await sdk.api.productEntityStates.find(req)
+    const res = await sdk.api.ProductEntityStateController.find({ name })
     productEntityState.value = res
 })
 </script>

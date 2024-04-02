@@ -34,10 +34,6 @@ const props = defineProps({
         type: String,
         required: true
     },
-    request: {
-        type: Function,
-        required: true
-    },
     destroyMethod: {
         type: Function,
         required: true
@@ -69,8 +65,7 @@ async function deleteEntity() {
         [props.foreignKeyName]: props.foreignKeyValue
     }
 
-    const req = new props.request(body)
-    await props.destroyMethod(req)
+    await props.destroyMethod(body)
     
     if (props.navigateOnDelete) {
         router.push(props.navigateOnDelete)

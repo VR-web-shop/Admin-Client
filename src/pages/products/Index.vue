@@ -17,17 +17,24 @@
                 </RestrictedElement>
             </template>
             
-            <Paginator 
-                :request="sdk.requests.ProductRequest.FindAllRequest" 
-                :findAllMethod="sdk.api.products.findAll"
-                :entitiesKey="'products'">
-                <template v-slot="{ entities }">
+            <MeteorPaginator
+                :findAllMethod="sdk.api.ProductController.findAll"
+                :limit="10">
+                <template #empty?>
+                    <div class="text-center text-gray-500">
+                        No products found.
+                    </div>
+                </template>
+
+                <template #default="{ entities }">
                     <table class="w-full border-l border-r border-gray-100">
                         <thead>
                             <tr class="border-b border-t border-gray-100">
                                 <th class="text-left p-3">UUID</th>
                                 <th class="text-left">Name</th>
                                 <th class="text-left">Description</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Thumbnail</th>
                                 <th class="text-center">Created at</th>
                                 <th class="text-center">Updated at</th>
                                 <th class="text-center">Action</th>
@@ -38,6 +45,10 @@
                                 <td class="p-3">{{ product.uuid }}</td>
                                 <td class="text-left">{{ product.name }}</td>
                                 <td class="text-left">{{ product.description }}</td>
+                                <td class="text-center">{{ product.price }}</td>
+                                <td class="text-center flex items-center justify-center">
+                                    <img :src="product.thumbnail_source" class="w-10 h-10" />
+                                </td>
                                 <td class="text-center">{{ product.created_at }}</td>
                                 <td class="text-center">{{ product.updated_at }}</td>
                                 <td class="text-center">
@@ -50,17 +61,16 @@
                     </table>
 
                 </template>
-            </Paginator>
+            </MeteorPaginator>
         </Content>
     </Restricted>
 </template>
 <script setup>
 import Content from '../../components/UI/Content.vue';
-import Paginator from '../../components/UI/Paginator.vue';
+import MeteorPaginator from '../../components/UI/MeteorPaginator.vue';
 import Restricted from '../../components/UI/Restricted.vue';
 import RestrictedElement from '../../components/UI/RestrictedElement.vue';
 import { useProductSDK } from '../../composables/useProductSDK.js';
 
 const { sdk } = useProductSDK()
-console.log(sdk)
 </script>

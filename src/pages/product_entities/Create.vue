@@ -26,21 +26,15 @@ import Content from '../../components/UI/Content.vue';
 import Restricted from '../../components/UI/Restricted.vue';
 import Form from './Form.vue';
 import { ref } from 'vue';
-import { router } from '../../router.js';
 import { useProductSDK } from '../../composables/useProductSDK.js';
 import { useToast } from '../../composables/useToast.js';
 
+const toastCtrl = useToast();
 const formRef = ref(null);
 
 async function submit(data) {
     const { sdk } = useProductSDK();
-    const { api, requests } = sdk;
-    const { productEntities } = api;
-    const { ProductEntityRequest } = requests;
-
-    const req = new ProductEntityRequest.CreateRequest(data);
-    await productEntities.create(req);
-    const toastCtrl = useToast();
+    await sdk.api.ProductEntityController.create({...data, product_entity_state_name: 'AVAILABLE_FOR_PURCHASE'});
     toastCtrl.add('Product Entity created', 5000, 'success');
     formRef.value.reset();
 }

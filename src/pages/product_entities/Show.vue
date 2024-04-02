@@ -7,15 +7,15 @@
         <Content v-else :links="[
         { name: 'Control Panel', path: '/' },
         { name: 'Product Entities', path: '/product_entities' },
-        { name: productEntity.uuid }
+        { name: uuid }
     ]">
             <template v-slot:header>
                 <h1 class="text-xl font-bold">
-                    {{ productEntity.uuid }}
+                    {{ uuid }}
                 </h1>
 
                 <RestrictedElement :permissions="['product-entities:update']">
-                    <router-link :to="'/product_entities/' + productEntity.uuid + '/edit'"
+                    <router-link :to="'/product_entities/' + uuid + '/edit'"
                         class="bg-blue-500 text-white px-3 py-1 rounded-md">Edit</router-link>
                 </RestrictedElement>
             </template>
@@ -56,8 +56,7 @@
                 permission="product-entities:delete"
                 foreignKeyName="uuid" 
                 :foreignKeyValue="productEntity.uuid"
-                :request="sdk.requests.ProductEntityRequest.DeleteRequest" 
-                :destroyMethod="sdk.api.productEntities.destroy"
+                :destroyMethod="sdk.api.ProductEntityController.destroy"
                 :isDeletable="true">
                 <template v-slot:description>
                     Be careful when deleting a product entity. This action is irreversible.
@@ -81,16 +80,12 @@ import { useProductSDK } from '../../composables/useProductSDK.js';
 import { ref, onBeforeMount } from 'vue'
 
 const { sdk } = useProductSDK()
-const { api } = sdk
-const { productEntities } = api
-const { ProductEntityRequest } = sdk.requests
 
 const uuid = router.currentRoute.value.params.uuid
 const productEntity = ref(null)
 
 async function fetchProductEntity() {
-    const req = new ProductEntityRequest.FindRequest({ uuid })
-    const res = await productEntities.find(req)
+    const res = await sdk.api.ProductEntityController.find({ uuid })
     productEntity.value = res
 }
 

@@ -26,10 +26,22 @@
                     Information
                 </h2>
 
-                <div class="flex items-center justify-start gap-3">
+                <div class="flex justify-start gap-3">
                     <div class="border border-gray-300 p-3 rounded-md shadow-md">
                         <label class="block text-sm font-bold mb-1">Description</label>
                         <div class="capitalize">{{ product.description }}</div>
+                    </div>
+
+                    <div class="border border-gray-300 p-3 rounded-md shadow-md">
+                        <label class="block text-sm font-bold mb-1">Price</label>
+                        <div class="capitalize">{{ product.price }}</div>
+                    </div>
+
+                    <div class="border border-gray-300 p-3 rounded-md shadow-md">
+                        <label class="block text-sm font-bold mb-1">Thumbnail</label>
+                        <div class="flex items-center justify-center">
+                            <img :src="product.thumbnail_source" class="w-10 h-10" />
+                        </div>
                     </div>
 
                     <div class="border border-gray-300 p-3 rounded-md shadow-md">
@@ -50,8 +62,7 @@
                 permission="products:delete"
                 foreignKeyName="uuid" 
                 :foreignKeyValue="product.uuid"
-                :request="sdk.requests.ProductRequest.DeleteRequest" 
-                :destroyMethod="sdk.api.products.destroy"
+                :destroyMethod="sdk.api.ProductController.destroy"
                 :isDeletable="true">
                 <template v-slot:description>
                     Be careful when deleting a product. This action is irreversible.
@@ -79,8 +90,7 @@ const product = ref(null)
 
 onBeforeMount(async () => {
     const uuid = router.currentRoute.value.params.uuid
-    const req = new sdk.requests.ProductRequest.FindRequest({ uuid })
-    const res = await sdk.api.products.find(req)
+    const res = await sdk.api.ProductController.find({ uuid })
     product.value = res
 })
 </script>

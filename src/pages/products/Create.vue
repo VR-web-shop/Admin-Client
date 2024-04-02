@@ -25,20 +25,14 @@ import Content from '../../components/UI/Content.vue';
 import Restricted from '../../components/UI/Restricted.vue';
 import Form from './Form.vue';
 import { ref } from 'vue';
-import { router } from '../../router.js';
 import { useProductSDK } from '../../composables/useProductSDK.js';
 import { useToast } from '../../composables/useToast.js';
 
 const formRef = ref(null);
 
-async function submit(data) {
+async function submit(formData) {
     const { sdk } = useProductSDK();
-    const { api, requests } = sdk;
-    const { products } = api;
-    const { ProductRequest } = requests;
-
-    const req = new ProductRequest.CreateRequest(data);
-    await products.create(req);
+    await sdk.api.ProductController.create(formData);
     const toastCtrl = useToast();
     toastCtrl.add('Product created', 5000, 'success');
     formRef.value.reset();
