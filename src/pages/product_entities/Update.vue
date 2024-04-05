@@ -41,17 +41,25 @@ import { router } from '../../router.js';
 const formRef = ref();
 const toastCtrl = useToast();
 const uuid = router.currentRoute.value.params.uuid
+const entity = ref(null)
 const { sdk } = useProductSDK();
 
 async function fetchProductEntity() {
     const res = await sdk.api.ProductEntityController.find({ uuid })
     formRef.value.setProductEntity(res)
+    entity.value = res
 }
 
 async function submit(data) {
+    if (entity.value.product_uuid !== data.product_uuid) {
+        toastCtrl.add('Product UUID cannot be changed', 5000, 'error');
+        return;
+    }
+
     const res = await sdk.api.ProductEntityController.update({ uuid, ...data });
     toastCtrl.add('Product Entity updated', 5000, 'success');
     formRef.value.setProductEntity(res)
+    entity.value = res
 }
 
 onBeforeMount(async () => {
