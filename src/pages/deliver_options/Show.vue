@@ -1,61 +1,19 @@
 <template>
-    <Restricted :permissions="['deliver-options:show']">
-        <div v-if="!deliverOption">
-            Loading...
-        </div>
-
-        <Content v-else :links="[
-            { name: 'Control Panel', path: '/' },
-            { name: 'Deliver Options', path: '/deliver_options' },
-            { name: deliverOption.name }
-        ]">
-            <template v-slot:header>
-                <h1 class="text-xl font-bold">
-                    {{ deliverOption.name }}
-                </h1>
-
-                
-            </template>
-
-            <div class="bg-gray-500 text-white rounded-md p-3 mb-3">
-                <h2 class="text-xl font-bold mb-3">
-                    Information
-                </h2>
-                <div class="flex items-center justify-start gap-3">
-                    <div class="border border-gray-300 p-3 rounded-md shadow-md">
-                        <label class="block text-sm font-bold mb-1">Price</label>
-                        <div class="capitalize">{{ deliverOption.price }}</div>
-                    </div>
-
-                    <div class="border border-gray-300 p-3 rounded-md shadow-md">
-                        <label class="block text-sm font-bold mb-1">Created at</label>
-                        <div class="capitalize">{{ deliverOption.created_at }}</div>
-                    </div>
-
-                    <div class="border border-gray-300 p-3 rounded-md shadow-md">
-                        <label class="block text-sm font-bold mb-1">Updated at</label>
-                        <div class="capitalize">{{ deliverOption.updated_at }}</div>
-                    </div>
-                </div>
-            </div>
-
-        </Content>
-    </Restricted>    
+    <ShowTemplate
+        name="Deliver Options"
+        permissionName="deliver-options"
+        path="/deliver_options"
+        pkName="clientSideUUID"
+        :canEdit="true"
+        :canDelete="true"
+        :keys="['clientSideUUID', 'name', 'price', 'created_at', 'updated_at']"
+        :find="find"
+        :remove="remove"
+    />  
 </template>
-
 <script setup>
-import Restricted from '../../components/UI/Restricted.vue';
-import Content from '../../components/UI/Content.vue';
-import { router } from '../../router.js';
-import { useProductSDK } from '../../composables/useProductSDK.js';
-import { ref, onBeforeMount } from 'vue'
-
-const { sdk } = useProductSDK()
-const deliverOption = ref(null)
-
-onBeforeMount(async () => {
-    const name = router.currentRoute.value.params.name
-    const res = await sdk.api.DeliverOptionController.find({ name })
-    deliverOption.value = res
-})
+import ShowTemplate from '../../components/page_templates/ShowTemplate.vue';
+import { useProducts } from '../../composables/useProducts.js';
+const find = useProducts().DeliverOption.find
+const remove = useProducts().DeliverOption.remove
 </script>

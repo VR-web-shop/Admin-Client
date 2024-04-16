@@ -1,59 +1,57 @@
 <template>
-    <Restricted :permissions="['users:update']">
-        <Content :links="[
-        { name: 'Control Panel', path: '/' },
-        { name: 'Products', path: '/products' },
-        { name: uuid, path: '/products/' + uuid },
-        { name: 'Update' }
-    ]">
-            <template v-slot:header>
-                <h1 class="text-xl font-bold">
-                    Update Product
-                </h1>
-            </template>
-
-            <p class="mb-3">
-                Use the form below to update an existing product.
-            </p>
-
-            <div>
-                <Form 
-                    ref="formRef" 
-                    buttonText="Update"
-                    :submit="submit" 
-                    :validateInput="false" 
-                >
-                    <input type="hidden" :value="uuid" name="uuid" />
-                </Form>
-            </div>
-        </Content>
-    </Restricted>
+    <UpdateTemplate
+        name="Products"
+        permissionName="products"
+        path="/products"
+        pkName="clientSideUUID"
+        :submit="submit"
+        :entity="entity"
+    >
+        <input type="text" placeholder="Name" name="name" ref="nameRef" class="w-full" />
+        <input type="text" placeholder="Description" name="description" ref="descRef" class="w-full" />
+        <input type="number" placeholder="Price" name="price" ref="priceRef" class="w-full" />
+        <input type="file" placeholder="File" name="file" ref="fileRef" class="w-full" />
+    </UpdateTemplate>
 </template>
 
 <script setup>
-import Form from './Form.vue';
-import Restricted from '../../components/UI/Restricted.vue';
-import Content from '../../components/UI/Content.vue';
-import { ref, onBeforeMount } from 'vue';
-import { useProductSDK } from '../../composables/useProductSDK.js';
-import { useToast } from '../../composables/useToast.js';
+import UpdateTemplate from '../../components/page_templates/UpdateTemplate.vue';
+import { useProducts } from '../../composables/useProducts.js';
 import { router } from '../../router.js';
+import { ref, onBeforeMount } from 'vue';
 
-const formRef = ref();
-const uuid = router.currentRoute.value.params.uuid
-const toastCtrl = useToast();
-const { sdk } = useProductSDK();
+const clientSideUUID = router.currentRoute.value.params.clientSideUUID
+const entity = ref({});
+const nameRef = ref(null);
+const descRef = ref(null);
+const priceRef = ref(null);
+const fileRef = ref(null);
+const ctrl = useProducts();
 
-async function fetchProduct() {
-    const res = await sdk.api.ProductController.find({ uuid })
-    formRef.value.setProduct(res)
+function setEntity(newEntity) {
+    entity.value = newEntity;
+    nameRef.value.value = newEntity.name;
+    descRef.value.value = newEntity.description;
+    priceRef.value.value = newEntity.price;
 }
 
-async function submit(formData) {
-    const res = await sdk.api.ProductController.update(formData);
-    formRef.value.setProduct(res)
-    toastCtrl.add('Product updated', 5000, 'success');
+async function submit(data) {
+    if (data.file.size > 0) {
+        const version = new Date().getTime();
+        const oldURL = entity.value.thumbnail_source
+        const clientSideUUID = entity.value.clientSideUUID
+        data.thumbnail_source = await ctrl.Product.upload(data.file, clientSideUUID, version, oldURL);
+        delete data.file;
+    } else {
+        data.thumbnail_source = entity.value.thumbnail_source
+    }
+
+    const res = await ctrl.Product.put(data)
+    setEntity(res)
 }
 
-onBeforeMount(async () => await fetchProduct())
+onBeforeMount(async () => {
+    const res = await ctrl.Product.find(clientSideUUID)
+    setEntity(res)
+})
 </script>

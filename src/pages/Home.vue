@@ -8,84 +8,96 @@ import { router } from '../router.js'
 
 const { sdk, authenticated } = useAuthSDK()
 
-const menuItems = [
-    { 
+const authMenuItems = [
+    {
         title: 'Manage Users',
         description: 'Find, create, update, and delete users',
-        method: () => router.push('/users'), 
-        permission: 'users:index' 
+        method: () => router.push('/users'),
+        permission: 'users:index'
     },
-    { 
-        title: 'Manage Roles', 
+    {
+        title: 'Manage Roles',
         description: 'Find, create, update, and delete roles',
-        method: () => router.push('/roles'), 
-        permission: 'roles:index' 
+        method: () => router.push('/roles'),
+        permission: 'roles:index'
     },
-    { 
-        title: 'Manage Permissions', 
+    {
+        title: 'Manage Permissions',
         description: 'Find, create, update, and delete permissions',
-        method: () => router.push('/permissions'), 
-        permission: 'permissions:index' 
+        method: () => router.push('/permissions'),
+        permission: 'permissions:index'
     },
-    { 
-        title: 'Manage Products', 
+]
+
+const productsMenuItems = [
+    {
+        title: 'Manage Products',
         description: 'Find, create, update, and delete products',
-        method: () => router.push('/products'), 
-        permission: 'products:index' 
+        method: () => router.push('/products'),
+        permission: 'products:index'
     },
-    { 
-        title: 'Manage Product Entities', 
+    {
+        title: 'Manage Product Entities',
         description: 'Find, create, update, ship, etc. product entities',
         method: () => router.push('/product_entities'),
-        permission: 'product-entities:index' 
+        permission: 'product-entities:index'
     },
-    { 
-        title: 'Manage Product Entity States', 
+    {
+        title: 'Manage Product Entity States',
         description: 'Find product entity states',
         method: () => router.push('/product_entity_states'),
-        permission: 'product-entity-states:index' 
+        permission: 'product-entity-states:index'
     },
-    { 
-        title: 'Manage Product Orders', 
+    {
+        title: 'Manage Product Orders',
         description: 'Find, update, and delete product orders',
-        method: () => router.push('/product_orders'), 
-        permission: 'product-orders:index' 
+        method: () => router.push('/product_orders'),
+        permission: 'product-orders:index'
     },
-    { 
-        title: 'Manage Product Order Entities', 
+    {
+        title: 'Manage Product Order Entities',
         description: 'Find, create, update, ship, etc. product order entities',
         method: () => router.push('/product_order_entities'),
-        permission: 'product-order-entities:index' 
+        permission: 'product-order-entities:index'
     },
-    { 
-        title: 'Manage Product Order States', 
+    {
+        title: 'Manage Product Order States',
         description: 'Find product order states',
         method: () => router.push('/product_order_states'),
-        permission: 'product-order-states:index' 
+        permission: 'product-order-states:index'
     },
-    { 
-        title: 'Manage Deliver options', 
+    {
+        title: 'Manage Deliver Options',
         description: 'Find deliver options',
         method: () => router.push('/deliver_options'),
-        permission: 'deliver-options:index' 
+        permission: 'deliver-options:index'
     },
-    { 
-        title: 'Manage Payment options', 
+    {
+        title: 'Manage Payment Options',
         description: 'Find payment options',
         method: () => router.push('/payment_options'),
-        permission: 'payment-options:index' 
+        permission: 'payment-options:index'
     },
-    { 
-        title: 'Manage 3D Scenes', 
+    {
+        title: 'Manage Valuta Settings',
+        description: 'Find valuta settings',
+        method: () => router.push('/valuta_settings'),
+        permission: 'valuta-settings:index'
+    }
+]
+
+const scenesMenuItems = [
+    {
+        title: 'Manage 3D Scenes',
         description: 'Find product entity states',
         method: () => {
             window.open('http://localhost:5174', '_blank')
         },
-        permission: 'scenes-editor:client:access' 
+        permission: 'scenes-editor:client:access'
     },
 ]
 
-const filteredMenuItems = computed(() => {
+const filterMenuItems = (menuItems) => {
     return menuItems.filter((item) => {
         const { permission } = item
         if (permission) {
@@ -93,6 +105,16 @@ const filteredMenuItems = computed(() => {
         }
         return true
     })
+}
+
+const filteredAuthMenuItems = computed(() => {
+    return filterMenuItems(authMenuItems)
+})
+const filteredProductsMenuItems = computed(() => {
+    return filterMenuItems(productsMenuItems)
+})
+const filteredScenesMenuItems = computed(() => {
+    return filterMenuItems(scenesMenuItems)
 })
 
 </script>
@@ -107,16 +129,58 @@ const filteredMenuItems = computed(() => {
             </div>
 
             <p class="mb-3 text-sm">
-                Welcome to the control panel. <br /> 
+                Welcome to the control panel. <br />
                 Find the menu items below to manage your application.
             </p>
 
-            <div class="grid grid-cols-3 gap-3">
-                <div v-for="item in filteredMenuItems" :key="item.title" @click="item.method">
-                    <button class="text-left border border-gray-300 p-3 rounded shadow-sm bg-gray-200 hover:bg-gray-100 w-full">
-                        <p class="text-md font-bold">{{ item.title }}</p>
-                        <p class="text-xs">{{ item.description }}</p>
-                    </button>
+            <div v-if="filteredAuthMenuItems.length > 0" class="pb-6 mb-4 border-b border-gray-300">
+                <h2 class="text-md font-bold mb-1">
+                    Authentication And Authorization
+                </h2>
+                <div class="grid grid-cols-3 gap-3">
+                    <div v-for="item in filteredAuthMenuItems" :key="item.title" @click="item.method">
+                        <button
+                            class="h-full flex items-start text-left border border-gray-300 px-3 pb-3 pt-2 rounded shadow-sm bg-gray-200 hover:bg-gray-100 w-full">
+                            <div>
+                                <p class="text-md font-bold">{{ item.title }}</p>
+                                <p class="text-xs">{{ item.description }}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="filteredProductsMenuItems.length > 0" class="pb-6 mb-4 border-b border-gray-300">
+                <h2 class="text-md font-bold mb-1">
+                    Products Management
+                </h2>
+                <div class="grid grid-cols-3 gap-3">
+                    <div v-for="item in filteredProductsMenuItems" :key="item.title" @click="item.method">
+                        <button
+                            class="h-full flex items-start text-left border border-gray-300 px-3 pb-3 pt-2 rounded shadow-sm bg-gray-200 hover:bg-gray-100 w-full">
+                            <div>
+                                <p class="text-md font-bold">{{ item.title }}</p>
+                                <p class="text-xs">{{ item.description }}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="filteredScenesMenuItems.length > 0" class="">
+                <h2 class="text-md font-bold mb-1">
+                    3D Scenes Management
+                </h2>
+                <div class="grid grid-cols-3 gap-3">
+                    <div v-for="item in filteredScenesMenuItems" :key="item.title" @click="item.method">
+                        <button
+                            class="h-full flex items-start text-left border border-gray-300 px-3 pb-3 pt-2 rounded shadow-sm bg-gray-200 hover:bg-gray-100 w-full">
+                            <div>
+                                <p class="text-md font-bold">{{ item.title }}</p>
+                                <p class="text-xs">{{ item.description }}</p>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

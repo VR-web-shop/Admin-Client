@@ -1,37 +1,17 @@
 <template>
-    <Restricted :permissions="['product-entity-states:show']">
-        <div v-if="!productEntityState">
-            Loading...
-        </div>
-
-        <Content v-else :links="[
-            { name: 'Control Panel', path: '/' },
-            { name: 'Product Entity States', path: '/product_entity_states' },
-            { name: productEntityState.name }
-        ]">
-            <template v-slot:header>
-                <h1 class="text-xl font-bold">
-                    {{ productEntityState.name }}
-                </h1>
-            </template>
-
-        </Content>
-    </Restricted>    
+    <ShowTemplate
+        name="Product Entity States"
+        permissionName="product-entity-states"
+        path="/product_entity_states"
+        pkName="name"
+        :canEdit="false"
+        :canDelete="false"
+        :keys="['name']"
+        :find="find"
+    />  
 </template>
-
 <script setup>
-import Restricted from '../../components/UI/Restricted.vue';
-import Content from '../../components/UI/Content.vue';
-import { router } from '../../router.js';
-import { useProductSDK } from '../../composables/useProductSDK.js';
-import { ref, onBeforeMount } from 'vue'
-
-const { sdk } = useProductSDK()
-const productEntityState = ref(null)
-
-onBeforeMount(async () => {
-    const name = router.currentRoute.value.params.name
-    const res = await sdk.api.ProductEntityStateController.find({ name })
-    productEntityState.value = res
-})
+import ShowTemplate from '../../components/page_templates/ShowTemplate.vue';
+import { useProducts } from '../../composables/useProducts.js';
+const find = useProducts().ProductEntityState.find
 </script>

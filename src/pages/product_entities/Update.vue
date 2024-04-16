@@ -1,68 +1,57 @@
 <template>
-    <Restricted :permissions="['users:update']">
-        <Content :links="[
-        { name: 'Control Panel', path: '/' },
-        { name: 'Product Entities', path: '/product_entities' },
-        { name: uuid, path: '/product_entities/' + uuid },
-        { name: 'Update' }
-    ]">
-            <template v-slot:header>
-                <h1 class="text-xl font-bold">
-                    Update Product Entity
-                </h1>
-            </template>
-
-            <p class="mb-3">
-                Use the form below to update an existing product entity.
-            </p>
-
-            <div>
-                <Form 
-                    ref="formRef" 
-                    buttonText="Update" 
-                    :productUUIDInitialValue="productEntity?.product_uuid"
-                    :submit="submit" 
-                    :validateInput="false" 
-                />
+    <UpdateTemplate
+        name="Product Entities"
+        permissionName="product-entities"
+        path="/product_entities"
+        pkName="clientSideUUID"
+        :submit="submit"
+        :entity="entity"
+    >
+    <MeteorPaginator :findAllMethod="findAll" :limit="10">
+        <template #empty?>
+            <div class="text-center text-gray-500">
+                No products found.
             </div>
-        </Content>
-    </Restricted>
+        </template>
+
+        <template #default="{ entities }">
+            <select name="product_client_side_uuid" ref="productUUIDRef"
+                class="border border-gray-300 rounded-md py-1 w-full">
+                <option value="" disabled selected>Select Product</option>
+                <option v-for="product in entities" :key="product.clientSideUUID" :value="product.clientSideUUID">
+                    {{ product.name }} - {{ product.description }}
+                </option>
+            </select>
+        </template>
+    </MeteorPaginator>
+    </UpdateTemplate>
 </template>
 
 <script setup>
-import Form from './Form.vue';
-import Restricted from '../../components/UI/Restricted.vue';
-import Content from '../../components/UI/Content.vue';
-import { ref, onBeforeMount } from 'vue';
-import { useProductSDK } from '../../composables/useProductSDK.js';
-import { useToast } from '../../composables/useToast.js';
+import MeteorPaginator from '../../components/UI/MeteorPaginator.vue';
+import UpdateTemplate from '../../components/page_templates/UpdateTemplate.vue';
+import { useProducts } from '../../composables/useProducts.js';
 import { router } from '../../router.js';
+import { ref, onBeforeMount } from 'vue';
 
-const formRef = ref();
-const toastCtrl = useToast();
-const uuid = router.currentRoute.value.params.uuid
-const entity = ref(null)
-const { sdk } = useProductSDK();
+const clientSideUUID = router.currentRoute.value.params.clientSideUUID
+const entity = ref({});
+const productUUIDRef = ref(null);
+const ctrl = useProducts();
+const findAll = useProducts().Product.findAll
 
-async function fetchProductEntity() {
-    const res = await sdk.api.ProductEntityController.find({ uuid })
-    formRef.value.setProductEntity(res)
-    entity.value = res
+function setEntity(newEntity) {
+    entity.value = newEntity;
+    productUUIDRef.value.value = newEntity.product_client_side_uuid;
 }
 
 async function submit(data) {
-    if (entity.value.product_uuid !== data.product_uuid) {
-        toastCtrl.add('Product UUID cannot be changed', 5000, 'error');
-        return;
-    }
-
-    const res = await sdk.api.ProductEntityController.update({ uuid, ...data });
-    toastCtrl.add('Product Entity updated', 5000, 'success');
-    formRef.value.setProductEntity(res)
-    entity.value = res
+    const res = await ctrl.ProductEntity.put(data);
+    setEntity(res)
 }
 
 onBeforeMount(async () => {
-    await fetchProductEntity()
+    const res = await ctrl.ProductEntity.find(clientSideUUID)
+    setEntity(res)
 })
 </script>

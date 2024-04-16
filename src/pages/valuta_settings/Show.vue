@@ -1,12 +1,12 @@
 <template>
     <ShowTemplate
-        name="Products"
-        permissionName="products"
-        path="/products"
+        name="Valuta Settings"
+        permissionName="valuta-settings"
+        path="/valuta_settings"
         pkName="clientSideUUID"
         :canEdit="true"
         :canDelete="true"
-        :keys="['clientSideUUID', 'name', 'description', 'thumbnail_source', 'price', 'created_at', 'updated_at']"
+        :keys="['clientSideUUID', 'name', 'short', 'symbol', 'active', 'created_at', 'updated_at']"
         :find="find"
         :remove="remove"
     />  
@@ -14,6 +14,6 @@
 <script setup>
 import ShowTemplate from '../../components/page_templates/ShowTemplate.vue';
 import { useProducts } from '../../composables/useProducts.js';
-const find = useProducts().Product.find
-const remove = useProducts().Product.remove
+const find = useProducts().ValutaSetting.find
+const remove = useProducts().ValutaSetting.remove
 </script>

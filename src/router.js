@@ -30,21 +30,36 @@ import ShowProductEntity from './pages/product_entities/Show.vue'
 
 import IndexProductEntityState from './pages/product_entity_states/Index.vue'
 import ShowProductEntityState from './pages/product_entity_states/Show.vue'
+import CreateProductEntityState from './pages/product_entity_states/Create.vue'
 
 import IndexProductOrder from './pages/product_orders/Index.vue'
 import ShowProductOrder from './pages/product_orders/Show.vue'
+import CreateProductOrder from './pages/product_orders/Create.vue'
+import UpdateProductOrder from './pages/product_orders/Update.vue'
 
 import IndexProductOrderEntity from './pages/product_order_entities/Index.vue'
 import ShowProductOrderEntity from './pages/product_order_entities/Show.vue'
+import CreateProductOrderEntity from './pages/product_order_entities/Create.vue'
+import UpdateProductOrderEntity from './pages/product_order_entities/Update.vue'
 
 import IndexProductOrderState from './pages/product_order_states/Index.vue'
 import ShowProductOrderState from './pages/product_order_states/Show.vue'
+import CreateProductOrderState from './pages/product_order_states/Create.vue'
 
 import IndexDeliverOption from './pages/deliver_options/Index.vue'
 import ShowDeliverOption from './pages/deliver_options/Show.vue'
+import CreateDeliverOption from './pages/deliver_options/Create.vue'
+import UpdateDeliverOption from './pages/deliver_options/Update.vue'
 
 import IndexPaymentOption from './pages/payment_options/Index.vue'
 import ShowPaymentOption from './pages/payment_options/Show.vue'
+import CreatePaymentOption from './pages/payment_options/Create.vue'
+import UpdatePaymentOption from './pages/payment_options/Update.vue'
+
+import IndexValutaSetting from './pages/valuta_settings/Index.vue'
+import ShowValutaSetting from './pages/valuta_settings/Show.vue'
+import CreateValutaSetting from './pages/valuta_settings/Create.vue'
+import UpdateValutaSetting from './pages/valuta_settings/Update.vue'
 
 const routes = [
     { path: '/', component: Home },
@@ -67,31 +82,46 @@ const routes = [
     
     { path: '/products', component: IndexProduct, name: 'products' },
     { path: '/products/create', component: CreateProduct, name: 'products.create' },
-    { path: '/products/:uuid', component: ShowProduct, name: 'products.show' },
-    { path: '/products/:uuid/edit', component: UpdateProduct, name: 'products.edit' },
+    { path: '/products/:clientSideUUID', component: ShowProduct, name: 'products.show' },
+    { path: '/products/:clientSideUUID/edit', component: UpdateProduct, name: 'products.edit' },
 
     { path: '/product_entities', component: IndexProductEntity, name: 'product_entities' },
     { path: '/product_entities/create', component: CreateProductEntity, name: 'product_entities.create' },
-    { path: '/product_entities/:uuid', component: ShowProductEntity, name: 'product_entities.show' },
-    { path: '/product_entities/:uuid/edit', component: UpdateProductEntity, name: 'product_entities.edit' },
+    { path: '/product_entities/:clientSideUUID', component: ShowProductEntity, name: 'product_entities.show' },
+    { path: '/product_entities/:clientSideUUID/edit', component: UpdateProductEntity, name: 'product_entities.edit' },
 
     { path: '/product_entity_states', component: IndexProductEntityState, name: 'product_entity_states' },
     { path: '/product_entity_states/:name', component: ShowProductEntityState, name: 'product_entity_states.show' },
+    { path: '/product_entity_states/create', component: CreateProductEntityState, name: 'product_entity_states.create' },
 
     { path: '/product_orders', component: IndexProductOrder, name: 'product_orders' },
-    { path: '/product_orders/:uuid', component: ShowProductOrder, name: 'product_orders.show' },
+    { path: '/product_orders/:clientSideUUID', component: ShowProductOrder, name: 'product_orders.show' },
+    { path: '/product_orders/create', component: CreateProductOrder, name: 'product_orders.create' },
+    { path: '/product_orders/:clientSideUUID/edit', component: UpdateProductOrder, name: 'product_orders.edit' },
 
     { path: '/product_order_entities', component: IndexProductOrderEntity, name: 'product_order_entities' },
-    { path: '/product_order_entities/:uuid', component: ShowProductOrderEntity, name: 'product_order_entities.show' },
+    { path: '/product_order_entities/:clientSideUUID', component: ShowProductOrderEntity, name: 'product_order_entities.show' },
+    { path: '/product_order_entities/create', component: CreateProductOrderEntity, name: 'product_order_entities.create' },
+    { path: '/product_order_entities/:clientSideUUID/edit', component: UpdateProductOrderEntity, name: 'product_order_entities.edit' },
 
     { path: '/product_order_states', component: IndexProductOrderState, name: 'product_order_states' },
     { path: '/product_order_states/:name', component: ShowProductOrderState, name: 'product_order_states.show' },
+    { path: '/product_order_states/create', component: CreateProductOrderState, name: 'product_order_states.create' },
 
     { path: '/deliver_options', component: IndexDeliverOption, name: 'deliver_options' },
-    { path: '/deliver_options/:name', component: ShowDeliverOption, name: 'deliver_options.show' },
+    { path: '/deliver_options/:clientSideUUID', component: ShowDeliverOption, name: 'deliver_options.show' },
+    { path: '/deliver_options/create', component: CreateDeliverOption, name: 'deliver_options.create' },
+    { path: '/deliver_options/:clientSideUUID/edit', component: UpdateDeliverOption, name: 'deliver_options.edit' },
 
     { path: '/payment_options', component: IndexPaymentOption, name: 'payment_options' },
-    { path: '/payment_options/:name', component: ShowPaymentOption, name: 'payment_options.show' },
+    { path: '/payment_options/:clientSideUUID', component: ShowPaymentOption, name: 'payment_options.show' },
+    { path: '/payment_options/create', component: CreatePaymentOption, name: 'payment_options.create' },
+    { path: '/payment_options/:clientSideUUID/edit', component: UpdatePaymentOption, name: 'payment_options.edit' },
+
+    { path: '/valuta_settings', component: IndexValutaSetting, name: 'valuta_settings' },
+    { path: '/valuta_settings/:clientSideUUID', component: ShowValutaSetting, name: 'valuta_settings.show' },
+    { path: '/valuta_settings/create', component: CreateValutaSetting, name: 'valuta_settings.create' },
+    { path: '/valuta_settings/:clientSideUUID/edit', component: UpdateValutaSetting, name: 'valuta_settings.edit' },
 ]
 
 export const router = createRouter({
