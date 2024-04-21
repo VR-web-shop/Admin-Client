@@ -7,8 +7,8 @@
         :keys="['name']"
         :findAll="findAll"
         :canCreate="true"
-        :canEdit="true"
-        :canDelete="true"
+        :canEdit="false"
+        :canDelete="false"
         :canShow="true"
         :remove="remove"
     />

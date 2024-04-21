@@ -22,6 +22,12 @@ const authMenuItems = [
         permission: 'roles:index'
     },
     {
+        title: 'Manage Role Permissions',
+        description: 'Find, create, update, and delete roles',
+        method: () => router.push('/role_permissions'),
+        permission: 'role-permissions:index'
+    },
+    {
         title: 'Manage Permissions',
         description: 'Find, create, update, and delete permissions',
         method: () => router.push('/permissions'),
@@ -86,6 +92,27 @@ const productsMenuItems = [
     }
 ]
 
+const shoppingCartMenuItems = [
+    {
+        title: 'Manage Carts',
+        description: 'Find, create, update, and delete carts',
+        method: () => router.push('/carts'),
+        permission: 'carts:index'
+    },
+    {
+        title: 'Manage Cart Product Entities',
+        description: 'Find, create, update, and delete cart product entities',
+        method: () => router.push('/carts'),
+        permission: 'cart-product-entities:index'
+    },
+    {
+        title: 'Manage Cart States',
+        description: 'Find cart states',
+        method: () => router.push('/cart_states'),
+        permission: 'cart-states:index'
+    },
+]
+
 const scenesMenuItems = [
     {
         title: 'Manage 3D Scenes',
@@ -113,6 +140,9 @@ const filteredAuthMenuItems = computed(() => {
 const filteredProductsMenuItems = computed(() => {
     return filterMenuItems(productsMenuItems)
 })
+const filteredShoppingCartMenuItems = computed(() => {
+    return filterMenuItems(shoppingCartMenuItems)
+})
 const filteredScenesMenuItems = computed(() => {
     return filterMenuItems(scenesMenuItems)
 })
@@ -134,7 +164,7 @@ const filteredScenesMenuItems = computed(() => {
             </p>
 
             <div v-if="filteredAuthMenuItems.length > 0" class="pb-6 mb-4 border-b border-gray-300">
-                <h2 class="text-md font-bold mb-1">
+                <h2 class="text-md font-bold mb-3">
                     Authentication And Authorization
                 </h2>
                 <div class="grid grid-cols-3 gap-3">
@@ -151,7 +181,7 @@ const filteredScenesMenuItems = computed(() => {
             </div>
 
             <div v-if="filteredProductsMenuItems.length > 0" class="pb-6 mb-4 border-b border-gray-300">
-                <h2 class="text-md font-bold mb-1">
+                <h2 class="text-md font-bold mb-3">
                     Products Management
                 </h2>
                 <div class="grid grid-cols-3 gap-3">
@@ -167,8 +197,25 @@ const filteredScenesMenuItems = computed(() => {
                 </div>
             </div>
 
+            <div v-if="filteredShoppingCartMenuItems.length > 0" class="pb-6 mb-4 border-b border-gray-300">
+                <h2 class="text-md font-bold mb-3">
+                    Shopping Cart Management
+                </h2>
+                <div class="grid grid-cols-3 gap-3">
+                    <div v-for="item in filteredShoppingCartMenuItems" :key="item.title" @click="item.method">
+                        <button
+                            class="h-full flex items-start text-left border border-gray-300 px-3 pb-3 pt-2 rounded shadow-sm bg-gray-200 hover:bg-gray-100 w-full">
+                            <div>
+                                <p class="text-md font-bold">{{ item.title }}</p>
+                                <p class="text-xs">{{ item.description }}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div v-if="filteredScenesMenuItems.length > 0" class="">
-                <h2 class="text-md font-bold mb-1">
+                <h2 class="text-md font-bold mb-3">
                     3D Scenes Management
                 </h2>
                 <div class="grid grid-cols-3 gap-3">

@@ -40,6 +40,7 @@ export const useProducts = () => {
             if (!json.data) return null
             return Object.keys(json.data)[0]
         })()
+
         if (key && json.data[key].__typename === 'RequestError') {
             const { code, message } = json.data[key]
 
@@ -49,11 +50,9 @@ export const useProducts = () => {
              * the refresh token is expired and we need to log in again.
              */
             if (code === '401' && authRefreshes < 1) {
-                const refresh_token = localStorage.getItem('refresh')
-                const refresh = await useAuthSDK().sdk.api.authentication.refresh({ refresh_token })
+                const refresh = await useAuthSDK().sdk.api.authentication.refresh()
                 localStorage.setItem('auth', refresh.access_token)
-                post(query, endpoint, extraHeaders, authRefreshes + 1)
-                return
+                return post(query, endpoint, extraHeaders, authRefreshes + 1)
             }
 
             toast.add(`Code: ${code} - ${message}`, 5000, 'error')

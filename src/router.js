@@ -13,6 +13,10 @@ import UpdateRole from './pages/roles/Update.vue'
 import IndexRole from './pages/roles/Index.vue'
 import ShowRole from './pages/roles/Show.vue'
 
+import CreateRolePermission from './pages/role_permissions/Create.vue'
+import IndexRolePermission from './pages/role_permissions/Index.vue'
+import ShowRolePermission from './pages/role_permissions/Show.vue'
+
 import CreatePermission from './pages/permissions/Create.vue'
 import UpdatePermission from './pages/permissions/Update.vue'
 import IndexPermission from './pages/permissions/Index.vue'
@@ -67,13 +71,17 @@ const routes = [
 
     { path: '/users', component: IndexUser, name: 'users' },
     { path: '/users/create', component: CreateUser, name: 'users.create' },
-    { path: '/users/:uuid', component: ShowUser, name: 'users.show' },
-    { path: '/users/:uuid/edit', component: UpdateUser, name: 'users.edit' },
+    { path: '/users/:client_side_uuid', component: ShowUser, name: 'users.show' },
+    { path: '/users/:client_side_uuid/edit', component: UpdateUser, name: 'users.edit' },
 
     { path: '/roles', component: IndexRole, name: 'roles' },
     { path: '/roles/create', component: CreateRole, name: 'roles.create' },
-    { path: '/roles/:name', component: ShowRole, name: 'roles.show' },
-    { path: '/roles/:name/edit', component: UpdateRole, name: 'roles.edit' },
+    { path: '/roles/:client_side_uuid', component: ShowRole, name: 'roles.show' },
+    { path: '/roles/:client_side_uuid/edit', component: UpdateRole, name: 'roles.edit' },
+
+    { path: '/role_permissions', component: IndexRolePermission, name: 'role_permissions' },
+    { path: '/role_permissions/create', component: CreateRolePermission, name: 'role_permissions.create' },
+    { path: '/role_permissions/:client_side_uuid', component: ShowRolePermission, name: 'role_permissions.show' },
 
     { path: '/permissions', component: IndexPermission, name: 'permissions' },
     { path: '/permissions/create', component: CreatePermission, name: 'permissions.create' },

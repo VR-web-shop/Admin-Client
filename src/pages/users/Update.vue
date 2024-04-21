@@ -1,81 +1,69 @@
 <template>
-    <Restricted :permissions="['users:update']">
-        <Content :links="[
-        { name: 'Control Panel', path: '/' },
-        { name: 'Users', path: '/users' },
-        { name: user?.uuid, path: '/users/' + user?.uuid },
-        { name: 'Update' }
-    ]">
-            <template v-slot:header>
-                <h1 class="text-xl font-bold">
-                    Update User
-                </h1>
+    <UpdateTemplate
+        name="Users"
+        permissionName="users"
+        path="/users"
+        pkName="client_side_uuid"
+        :submit="submit"
+        :entity="entity"
+    >
+        <input type="text" name="first_name" placeholder="First name" ref="firstNameRef" class="input" />
+        <input type="text" name="last_name" placeholder="Last name" ref="lastNameRef" class="input" />
+        <input type="email" name="email" placeholder="Email" ref="emailRef" class="input" />
+        <input type="password" name="password" placeholder="Password" ref="passwordRef" class="input" />
+        <MeteorPaginator :findAllMethod="findAllRoles" :limit="10">
+
+            <template #empty?>
+                <div class="text-center text-gray-500">
+                    No roles found.
+                </div>
             </template>
 
-            <p class="mb-3">
-                Use the form below to update an existing user
-                for employees or customers.
-            </p>
-            <div v-if="user?.uuid === me?.uuid">
-                <div class="text-red-500 mb-3">
-                    <p class="mb-3">
-                        You cannot update yourself. Please contact another admin to update your account.
-                    </p>
-                </div>
-            </div>
-
-            <div v-else>
-                <Form 
-                    ref="formRef" 
-                    buttonText="Update" 
-                    :emailInitialValue="user?.email"
-                    :roleInitialValue="user?.role_name" 
-                    :submit="submit" 
-                    :validateInput="false" 
-                />
-            </div>
-        </Content>
-    </Restricted>
+            <template #default="{ entities }">
+                <select name="role_client_side_uuid" ref="roleClientSideUUIDRef"
+                    class="border border-gray-300 rounded-md py-1 w-full">
+                    <option value="" disabled selected>Select Role</option>
+                    <option v-for="role in entities" :key="role.client_side_uuid" :value="role.client_side_uuid">
+                        {{ role.name }} - {{ role.description }}
+                    </option>
+                </select>
+            </template>
+        </MeteorPaginator>
+    </UpdateTemplate>
 </template>
 
 <script setup>
-import Form from './Form.vue';
-import Restricted from '../../components/UI/Restricted.vue';
-import Content from '../../components/UI/Content.vue';
+import MeteorPaginator from '../../components/UI/MeteorPaginator.vue';
+import UpdateTemplate from '../../components/page_templates/UpdateTemplate.vue';
+import { router } from '../../router.js';
 import { ref, onBeforeMount } from 'vue';
 import { useAuthSDK } from '../../composables/useAuthSDK.js';
-import { useToast } from '../../composables/useToast.js';
-import { router } from '../../router.js';
 
-const formRef = ref();
-const user = ref(null)
-const me = ref(null)
-const uuid = router.currentRoute.value.params.uuid
+const sdk = useAuthSDK().sdk
+const findAllRoles = sdk.api.adminRoles.findAll
+const client_side_uuid = router.currentRoute.value.params.client_side_uuid
+const entity = ref({});
+const firstNameRef = ref(null);
+const lastNameRef = ref(null);
+const emailRef = ref(null);
+const passwordRef = ref(null);
+const roleClientSideUUIDRef = ref(null);
 
-const { sdk } = useAuthSDK();
-const { api, requests } = sdk
-const { adminUsers, users } = api
-const { UserRequest } = requests
-
-async function fetchUser() {
-    const req = new UserRequest.AdminFindRequest({ uuid })
-    const res = await adminUsers.find(req)
-    const resMe = await users.findMe()
-    me.value = resMe
-    user.value = res
+function setEntity(newEntity) {
+    entity.value = newEntity;
+    firstNameRef.value.value = newEntity.first_name;
+    lastNameRef.value.value = newEntity.last_name;
+    emailRef.value.value = newEntity.email;
+    roleClientSideUUIDRef.value.value = newEntity.role_client_side_uuid;
 }
 
 async function submit(data) {
-    const req = new UserRequest.AdminUpdateRequest({ uuid, ...data });
-    await adminUsers.update(req);
-    const toastCtrl = useToast();
-    toastCtrl.add('User updated', 5000, 'success');
-
-    formRef.value.reset();
-    await fetchUser()
+    const res = await sdk.api.adminUsers.update(data);
+    setEntity(res)
 }
 
 onBeforeMount(async () => {
-    await fetchUser()
+    const res = await sdk.api.adminUsers.find({client_side_uuid})
+    setEntity(res)
 })
 </script>

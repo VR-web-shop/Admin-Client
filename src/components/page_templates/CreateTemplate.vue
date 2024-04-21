@@ -66,7 +66,8 @@ async function submit() {
         }
     }
 
-    await props.submit({ ...data, clientSideUUID: uuidv4() });
+    const clientSideUUID = uuidv4()
+    await props.submit({ ...data, clientSideUUID, client_side_uuid: clientSideUUID });
     toastCtrl.add(`${props.name} created`, 5000, 'success');
     formRef.value.reset();
 }

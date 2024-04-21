@@ -5,6 +5,7 @@ export const useMeteorPaginator = (findAllMethod, limitInitial=10, include=null)
     const limit = ref(limitInitial)
     const page = ref(1)
     const pages = ref(1)
+    const count = ref(0)
 
     const refresh = async () => {
         const params = {
@@ -16,6 +17,7 @@ export const useMeteorPaginator = (findAllMethod, limitInitial=10, include=null)
 
         entities.value = res.rows;
         pages.value = res.pages;
+        count.value = res.count;
     };
 
     const nextPage = async () => {
@@ -37,6 +39,7 @@ export const useMeteorPaginator = (findAllMethod, limitInitial=10, include=null)
         page,
         limit,
         pages,
+        count,
         refresh,
         nextPage,
         previousPage

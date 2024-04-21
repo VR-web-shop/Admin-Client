@@ -1,14 +1,10 @@
 <template>
     <CreateTemplate
-        name="Users"
-        permissionName="users"
-        path="/users"
+        name="Role Permissions"
+        permissionName="role-permissions"
+        path="/role_permissions"
         :submit="submit"
     >
-        <input type="text" name="first_name" placeholder="First name" class="input" />
-        <input type="text" name="last_name" placeholder="Last name" class="input" />
-        <input type="email" name="email" placeholder="Email" class="input" />
-        <input type="password" name="password" placeholder="Password" class="input" />
         <MeteorPaginator :findAllMethod="findAllRoles" :limit="10">
 
             <template #empty?>
@@ -27,6 +23,24 @@
                 </select>
             </template>
         </MeteorPaginator>
+        <MeteorPaginator :findAllMethod="findAllPermissions" :limit="10">
+
+            <template #empty?>
+                <div class="text-center text-gray-500">
+                    No permissions found.
+                </div>
+            </template>
+
+            <template #default="{ entities }">
+                <select name="permission_name" ref="productUUIDRef"
+                    class="border border-gray-300 rounded-md py-1 w-full">
+                    <option value="" disabled selected>Select Permission</option>
+                    <option v-for="permission in entities" :key="permission.name" :value="permission.name">
+                        {{ permission.name }} - {{ permission.description }}
+                    </option>
+                </select>
+            </template>
+        </MeteorPaginator>
     </CreateTemplate>
 </template>
 <script setup>
@@ -35,5 +49,6 @@ import CreateTemplate from '../../components/page_templates/CreateTemplate.vue';
 import { useAuthSDK } from '../../composables/useAuthSDK.js';
 const sdk = useAuthSDK().sdk
 const findAllRoles = sdk.api.adminRoles.findAll
-const submit = sdk.api.adminUsers.create
+const findAllPermissions = sdk.api.adminPermissions.findAll
+const submit = sdk.api.adminRolePermissions.create
 </script>
