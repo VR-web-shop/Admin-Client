@@ -17,7 +17,7 @@ export const useProducts = () => {
             Object.keys(extraHeaders).forEach(key => {
                 headers[key] = extraHeaders[key]
             })
-        }
+        }        
 
         const response = await fetch(`${SERVER_URL}${endpoint}`, {
             method: 'POST',
@@ -71,7 +71,22 @@ export const useProducts = () => {
     const api = function(singularName, pluralName, pkName, putParams, returnParams) {
         const lowercasedSingularName = singularName.slice(0, 1).toLowerCase() + singularName.slice(1, singularName.length)
         const lowercasedPluralName = pluralName.slice(0, 1).toLowerCase() + pluralName.slice(1, pluralName.length)
-
+        
+        for (let i = 0; i < putParams.length; i++) {
+            if (putParams[i] === 'transaction_state_name:string') {
+                // Slice out the transaction_state_name and transaction_message
+                putParams.splice(i, 2)
+                break
+            }
+        }
+        for (let i = 0; i < putParams.length; i++) {
+            if (putParams[i] === 'transaction_message:string') {
+                // Slice out the transaction_state_name and transaction_message
+                putParams.splice(i, 2)
+                break
+            }
+        }
+        console.log(putParams)
         const find = async (pk) => {
             const response = await postJSON(`{ ${lowercasedSingularName}(${pkName}: "${pk}") {
                 __typename
@@ -218,8 +233,8 @@ export const useProducts = () => {
         'ProductEntity',
         'ProductEntities',
         'clientSideUUID',
-        ['clientSideUUID:string', 'product_entity_state_name:string', 'product_client_side_uuid:string'],
-        'clientSideUUID product_entity_state_name product_client_side_uuid created_at updated_at'
+        ['clientSideUUID:string', 'product_entity_state_name:string', 'product_client_side_uuid:string', 'transaction_state_name:string', 'transaction_message:string'],
+        'clientSideUUID product_entity_state_name product_client_side_uuid transaction_state_name transaction_message created_at updated_at'
     )
 
     const ProductOrder = api(

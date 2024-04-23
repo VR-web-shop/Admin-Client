@@ -30,5 +30,8 @@ import MeteorPaginator from '../../components/UI/MeteorPaginator.vue';
 import CreateTemplate from '../../components/page_templates/CreateTemplate.vue';
 import { useProducts } from '../../composables/useProducts.js';
 const findAll = useProducts().Product.findAll
-const submit = useProducts().ProductEntity.put
+const submit = (data) => {
+    data.product_entity_state_name = 'AVAILABLE_FOR_PURCHASE'
+    useProducts().ProductEntity.put(data)
+}
 </script>
