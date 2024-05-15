@@ -65,6 +65,19 @@ import ShowValutaSetting from './pages/valuta_settings/Show.vue'
 import CreateValutaSetting from './pages/valuta_settings/Create.vue'
 import UpdateValutaSetting from './pages/valuta_settings/Update.vue'
 
+import IndexCartState from './pages/cart_states/Index.vue'
+import ShowCartState from './pages/cart_states/Show.vue'
+import CreateCartState from './pages/cart_states/Create.vue'
+
+import IndexCart from './pages/carts/Index.vue'
+import ShowCart from './pages/carts/Show.vue'
+import CreateCart from './pages/carts/Create.vue'
+import UpdateCart from './pages/carts/Update.vue'
+
+import IndexCartProductEntity from './pages/cart_product_entities/Index.vue'
+import ShowCartProductEntity from './pages/cart_product_entities/Show.vue'
+import CreateCartProductEntity from './pages/cart_product_entities/Create.vue'
+
 const routes = [
     { path: '/', component: Home },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
@@ -130,6 +143,19 @@ const routes = [
     { path: '/valuta_settings/:clientSideUUID', component: ShowValutaSetting, name: 'valuta_settings.show' },
     { path: '/valuta_settings/create', component: CreateValutaSetting, name: 'valuta_settings.create' },
     { path: '/valuta_settings/:clientSideUUID/edit', component: UpdateValutaSetting, name: 'valuta_settings.edit' },
+
+    { path: '/cart_states', component: IndexCartState, name: 'cart_states' },
+    { path: '/cart_states/:name', component: ShowCartState, name: 'cart_states.show' },
+    { path: '/cart_states/create', component: CreateCartState, name: 'cart_states.create' },
+
+    { path: '/carts', component: IndexCart, name: 'carts' },
+    { path: '/carts/:client_side_uuid', component: ShowCart, name: 'carts.show' },
+    { path: '/carts/create', component: CreateCart, name: 'carts.create' },
+    { path: '/carts/:client_side_uuid/edit', component: UpdateCart, name: 'carts.edit' },
+
+    { path: '/cart_product_entities', component: IndexCartProductEntity, name: 'cart_product_entities' },
+    { path: '/cart_product_entities/:client_side_uuid', component: ShowCartProductEntity, name: 'cart_product_entities.show' },
+    { path: '/cart_product_entities/create', component: CreateCartProductEntity, name: 'cart_product_entities.create' },
 ]
 
 export const router = createRouter({

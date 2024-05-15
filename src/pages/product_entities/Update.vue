@@ -7,6 +7,7 @@
         :submit="submit"
         :entity="entity"
     >
+    <input type="hidden" name="product_entity_state_name" ref="productEntityStateNameRef" />
     <MeteorPaginator :findAllMethod="findAll" :limit="10">
         <template #empty?>
             <div class="text-center text-gray-500">
@@ -37,12 +38,14 @@ import { ref, onBeforeMount } from 'vue';
 const clientSideUUID = router.currentRoute.value.params.clientSideUUID
 const entity = ref({});
 const productUUIDRef = ref(null);
+const productEntityStateNameRef = ref(null);
 const ctrl = useProducts();
 const findAll = useProducts().Product.findAll
 
 function setEntity(newEntity) {
     entity.value = newEntity;
     productUUIDRef.value.value = newEntity.product_client_side_uuid;
+    productEntityStateNameRef.value.value = newEntity.product_entity_state_name;
 }
 
 async function submit(data) {

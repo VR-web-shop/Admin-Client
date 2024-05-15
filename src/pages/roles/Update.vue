@@ -31,12 +31,12 @@ function setEntity(newEntity) {
 }
 
 async function submit(data) {
-    const res = await sdk.api.adminRoles.update(data);
+    const res = await sdk.api.adminRoles.update(client_side_uuid, data);
     setEntity(res)
 }
 
 onBeforeMount(async () => {
-    const res = await sdk.api.adminRoles.find({client_side_uuid})
+    const res = await sdk.api.adminRoles.find(client_side_uuid)
     setEntity(res)
 })
 </script>

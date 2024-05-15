@@ -18,5 +18,5 @@ import IndexTemplate from '../../components/page_templates/IndexTemplate.vue';
 import { useAuthSDK } from '../../composables/useAuthSDK.js';
 const sdk = useAuthSDK().sdk
 const findAll = sdk.api.adminPermissions.findAll
-const remove = (name) => sdk.api.adminPermissions.destroy({ name })
+const remove = (name) => sdk.api.adminPermissions.destroy(name)
 </script>

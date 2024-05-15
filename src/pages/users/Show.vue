@@ -15,6 +15,6 @@
 import ShowTemplate from '../../components/page_templates/ShowTemplate.vue';
 import { useAuthSDK } from '../../composables/useAuthSDK.js';
 const sdk = useAuthSDK().sdk
-const find = (client_side_uuid) => sdk.api.adminUsers.find({ client_side_uuid })
-const remove = (client_side_uuid) => sdk.api.adminUsers.destroy({ client_side_uuid })
+const find = (client_side_uuid) => sdk.api.adminUsers.find(client_side_uuid)
+const remove = (client_side_uuid) => sdk.api.adminUsers.destroy(client_side_uuid)
 </script>

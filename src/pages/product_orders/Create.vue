@@ -45,6 +45,23 @@
                 </select>
             </template>
         </MeteorPaginator>
+        <MeteorPaginator :findAllMethod="productOrderStateFindAll" :limit="10">
+            <template #empty?>
+                <div class="text-center text-gray-500">
+                    No states found.
+                </div>
+            </template>
+
+            <template #default="{ entities }">
+                <select name="product_order_state_name" ref="productOrderStateRef"
+                    class="border border-gray-300 rounded-md py-1 w-full">
+                    <option value="" disabled selected>Select State</option>
+                    <option v-for="option in entities" :key="option.name" :value="option.name">
+                        {{ option.name }} 
+                    </option>
+                </select>
+            </template>
+        </MeteorPaginator>
     </CreateTemplate>
 </template>
 <script setup>
@@ -53,5 +70,6 @@ import CreateTemplate from '../../components/page_templates/CreateTemplate.vue';
 import { useProducts } from '../../composables/useProducts.js';
 const deliverOptionFindAll = useProducts().DeliverOption.findAll
 const paymentOptionFindAll = useProducts().PaymentOption.findAll
+const productOrderStateFindAll = useProducts().ProductOrderState.findAll
 const submit = useProducts().ProductOrder.put
 </script>

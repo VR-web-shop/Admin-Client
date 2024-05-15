@@ -1,8 +1,8 @@
 <template>
     <IndexTemplate 
-        name="Product Entity States" 
-        permissionName="product-entity-states" 
-        path="/product_entity_states" 
+        name="Cart States" 
+        permissionName="cart-states" 
+        path="/cart_states" 
         pkName="name" 
         :keys="['name']"
         :findAll="findAll"
@@ -14,6 +14,6 @@
 </template>
 <script setup>
 import IndexTemplate from '../../components/page_templates/IndexTemplate.vue';
-import { useProducts } from '../../composables/useProducts.js';
-const findAll = useProducts().ProductEntityState.findAll
+import { useShoppingCart } from '../../composables/useShoppingCart.js';
+const findAll = useShoppingCart().CartState.findAll
 </script>

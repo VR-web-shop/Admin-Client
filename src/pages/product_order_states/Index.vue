@@ -6,16 +6,14 @@
         pkName="name" 
         :keys="['name']"
         :findAll="findAll"
-        :canCreate="true"
+        :canCreate="false"
         :canEdit="false"
         :canDelete="false"
         :canShow="true"
-        :remove="remove"
     />
 </template>
 <script setup>
 import IndexTemplate from '../../components/page_templates/IndexTemplate.vue';
 import { useProducts } from '../../composables/useProducts.js';
 const findAll = useProducts().ProductOrderState.findAll
-const remove = useProducts().ProductOrderState.remove
 </script>

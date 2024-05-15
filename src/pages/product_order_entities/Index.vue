@@ -4,7 +4,15 @@
         permissionName="product-order-entities" 
         path="/product_order_entities" 
         pkName="clientSideUUID" 
-        :keys="['clientSideUUID', 'product_order_client_side_uuid', 'product_entity_client_side_uuid', 'created_at', 'updated_at']"
+        :keys="[
+            'clientSideUUID', 
+            'product_order_client_side_uuid', 
+            'product_entity_client_side_uuid', 
+            'transaction_state_name',
+            'transaction_message',
+            'created_at', 
+            'updated_at'
+        ]"
         :findAll="findAll"
         :remove="remove"
         :canCreate="true"

@@ -6,7 +6,17 @@
         pkName="clientSideUUID"
         :canEdit="true"
         :canDelete="true"
-        :keys="['clientSideUUID', 'name', 'description', 'thumbnail_source', 'price', 'created_at', 'updated_at']"
+        :keys="[
+            'clientSideUUID', 
+            'name', 
+            'description', 
+            'thumbnail_source', 
+            'price', 
+            'transaction_state_name',
+            'transaction_message', 
+            'created_at', 
+            'updated_at'
+        ]"
         :find="find"
         :remove="remove"
     />  

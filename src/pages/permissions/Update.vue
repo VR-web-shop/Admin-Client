@@ -31,12 +31,12 @@ function setEntity(newEntity) {
 }
 
 async function submit(data) {
-    const res = await sdk.api.adminPermissions.update(data);
+    const res = await sdk.api.adminPermissions.update(name, data);
     setEntity(res)
 }
 
 onBeforeMount(async () => {
-    const res = await sdk.api.adminPermissions.find({name})
+    const res = await sdk.api.adminPermissions.find(name)
     setEntity(res)
 })
 </script>

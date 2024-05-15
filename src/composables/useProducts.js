@@ -2,7 +2,7 @@ import { useAuthSDK } from "./useAuthSDK.js"
 import { useToast } from "./useToast.js"
 
 const toast = useToast()
-const SERVER_URL = 'http://localhost:3002'
+const SERVER_URL = 'http://104.248.29.24:3002'
 
 export const useProducts = () => {
     const post = async (body, endpoint='/graphql', extraHeaders=null, authRefreshes=0) => {
@@ -190,7 +190,7 @@ export const useProducts = () => {
             formData.append('prefix', lowercasedSingularName)
             if (oldURL) formData.append('oldURL', oldURL)
 
-            const data = await post(formData, '/upload')
+            const data = await post(formData, '/api/v1/upload')
             
             return data.url
         }
@@ -210,7 +210,7 @@ export const useProducts = () => {
         'DeliverOptions',
         'clientSideUUID', 
         ['clientSideUUID:string', 'name:string', 'price:float'], 
-        'clientSideUUID name price created_at updated_at'
+        'clientSideUUID name price transaction_state_name transaction_message created_at updated_at'
     )
 
     const PaymentOption = api(
@@ -218,7 +218,7 @@ export const useProducts = () => {
         'PaymentOptions',
         'clientSideUUID', 
         ['clientSideUUID:string', 'name:string', 'price:float'], 
-        'clientSideUUID name price created_at updated_at'
+        'clientSideUUID name price transaction_state_name transaction_message created_at updated_at'
     )
 
     const Product = api(
@@ -226,7 +226,7 @@ export const useProducts = () => {
         'Products',
         'clientSideUUID',
         ['clientSideUUID:string', 'name:string', 'description:string', 'price:float', 'thumbnail_source:string'],
-        'clientSideUUID name description price thumbnail_source created_at updated_at'
+        'clientSideUUID name description price thumbnail_source transaction_state_name transaction_message created_at updated_at'
     )
 
     const ProductEntity = api(
@@ -242,7 +242,7 @@ export const useProducts = () => {
         'ProductOrders',
         'clientSideUUID',
         ['clientSideUUID:string', 'name:string', 'email:string', 'address:string', 'city:string', 'country:string', 'postal_code:string', 'product_order_state_name:string', 'deliver_option_client_side_uuid:string', 'payment_option_client_side_uuid:string'],
-        'clientSideUUID name email address city country postal_code product_order_state_name deliver_option_client_side_uuid payment_option_client_side_uuid created_at updated_at'
+        'clientSideUUID name email address city country postal_code product_order_state_name deliver_option_client_side_uuid payment_option_client_side_uuid transaction_state_name transaction_message created_at updated_at'
     )
 
     const ProductOrderEntity = api(
@@ -250,7 +250,7 @@ export const useProducts = () => {
         'ProductOrderEntities',
         'clientSideUUID',
         ['clientSideUUID:string', 'product_entity_client_side_uuid:string', 'product_order_client_side_uuid:string'],
-        'clientSideUUID product_entity_client_side_uuid product_order_client_side_uuid created_at updated_at'
+        'clientSideUUID product_entity_client_side_uuid product_order_client_side_uuid transaction_state_name transaction_message created_at updated_at'
     )
 
     const ProductEntityState = api(

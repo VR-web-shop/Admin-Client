@@ -18,5 +18,5 @@ import IndexTemplate from '../../components/page_templates/IndexTemplate.vue';
 import { useAuthSDK } from '../../composables/useAuthSDK.js';
 const sdk = useAuthSDK().sdk
 const findAll = sdk.api.adminRolePermissions.findAll
-const remove = (client_side_uuid) => sdk.api.adminRolePermissions.destroy({ client_side_uuid })
+const remove = (client_side_uuid) => sdk.api.adminRolePermissions.destroy(client_side_uuid)
 </script>

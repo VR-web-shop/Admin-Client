@@ -58,12 +58,12 @@ function setEntity(newEntity) {
 }
 
 async function submit(data) {
-    const res = await sdk.api.adminUsers.update(data);
+    const res = await sdk.api.adminUsers.update(client_side_uuid, data);
     setEntity(res)
 }
 
 onBeforeMount(async () => {
-    const res = await sdk.api.adminUsers.find({client_side_uuid})
+    const res = await sdk.api.adminUsers.find(client_side_uuid)
     setEntity(res)
 })
 </script>

@@ -4,7 +4,15 @@
         permissionName="payment-options" 
         path="/payment_options" 
         pkName="clientSideUUID" 
-        :keys="['clientSideUUID', 'name', 'price', 'created_at', 'updated_at']"
+        :keys="[
+            'clientSideUUID', 
+            'name', 
+            'price', 
+            'transaction_state_name',
+            'transaction_message',
+            'created_at', 
+            'updated_at'
+        ]"
         :findAll="findAll"
         :remove="remove"
         :canCreate="true"

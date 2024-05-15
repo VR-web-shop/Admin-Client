@@ -102,7 +102,7 @@ const shoppingCartMenuItems = [
     {
         title: 'Manage Cart Product Entities',
         description: 'Find, create, update, and delete cart product entities',
-        method: () => router.push('/carts'),
+        method: () => router.push('/cart_product_entities'),
         permission: 'cart-product-entities:index'
     },
     {
