@@ -9,6 +9,7 @@ COPY package*.json ./
 
 # Copy environment files (.env) if needed
 COPY .env* ./
+COPY .npmrc* ./
 
 # Install dependencies
 RUN npm install
