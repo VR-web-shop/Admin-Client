@@ -6,5 +6,9 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     port: 5173,
-  }
+  },
+  build: {
+    outDir: 'dist', // Output directory for the build
+    assetsDir: './', // Relative path for assets
+  },
 })
