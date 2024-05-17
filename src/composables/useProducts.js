@@ -2,7 +2,7 @@ import { useAuthSDK } from "./useAuthSDK.js"
 import { useToast } from "./useToast.js"
 
 const toast = useToast()
-const SERVER_URL = 'http://104.248.29.24:3002'
+const SERVER_URL = import.meta.env.VITE_PRODUCTS_SERVER_URL
 
 export const useProducts = () => {
     const post = async (body, endpoint='/graphql', extraHeaders=null, authRefreshes=0) => {

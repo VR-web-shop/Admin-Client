@@ -6,7 +6,7 @@ import ProductSDK from '@vr-web-shop/products'
  */
 
 
-const SERVER_URL = 'http://104.248.29.24:3002'
+const SERVER_URL = import.meta.env.VITE_PRODUCTS_SERVER_URL
 const API_VERSION = 'v1'
 const sdk = new ProductSDK(SERVER_URL, API_VERSION)
 

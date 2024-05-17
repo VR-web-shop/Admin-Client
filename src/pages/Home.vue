@@ -118,7 +118,10 @@ const scenesMenuItems = [
         title: 'Manage 3D Scenes',
         description: 'Find product entity states',
         method: () => {
-            window.open('http://localhost:5174', '_blank')
+            window.open(
+                import.meta.env.VITE_SCENES_EDITOR_CLIENT_URL, 
+                '_blank'
+            )
         },
         permission: 'scenes-editor:client:access'
     },

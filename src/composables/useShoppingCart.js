@@ -2,7 +2,7 @@ import { useAuthSDK } from "./useAuthSDK.js"
 import { useToast } from "./useToast.js"
 
 const toast = useToast()
-const SERVER_URL = 'http://104.248.29.24:3004'
+const SERVER_URL = import.meta.env.VITE_SHOPPING_CART_SERVER_URL
 
 export function useShoppingCart() {
     const request = async (endpoint, method='GET', body=null) => {
