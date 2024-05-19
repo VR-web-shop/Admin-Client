@@ -66,9 +66,9 @@ export function useShoppingCart() {
         }
     }
 
-    const Cart = api('/admin/carts', '/admin/cart')
-    const CartProductEntity = api('/admin/cart_product_entities', '/admin/cart_product_entity')
-    const CartState = api('/admin/cart_states', '/admin/cart_state')
+    const Cart = api('/api/v1/admin/carts', '/api/v1/admin/cart')
+    const CartProductEntity = api('/api/v1/admin/cart_product_entities', '/api/v1/admin/cart_product_entity')
+    const CartState = api('/api/v1/admin/cart_states', '/api/v1/admin/cart_state')
 
     return {
         Cart,
