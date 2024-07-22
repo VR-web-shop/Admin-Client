@@ -78,6 +78,12 @@ import IndexCartProductEntity from './pages/cart_product_entities/Index.vue'
 import ShowCartProductEntity from './pages/cart_product_entities/Show.vue'
 import CreateCartProductEntity from './pages/cart_product_entities/Create.vue'
 
+import IndexCartDeliverOptions from './pages/cart_deliver_options/Index.vue'
+import IndexCartPaymentOptions from './pages/cart_payment_options/Index.vue'
+import IndexCartProducts from './pages/cart_products/Index.vue'
+import IndexCartEntities from './pages/cart_entities/Index.vue'
+import IndexCartProductOrders from './pages/cart_product_orders/Index.vue'
+
 const routes = [
     { path: '/', component: Home },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
@@ -156,6 +162,12 @@ const routes = [
     { path: '/cart_product_entities', component: IndexCartProductEntity, name: 'cart_product_entities' },
     { path: '/cart_product_entities/:client_side_uuid', component: ShowCartProductEntity, name: 'cart_product_entities.show' },
     { path: '/cart_product_entities/create', component: CreateCartProductEntity, name: 'cart_product_entities.create' },
+
+    { path: '/cart_deliver_options', component: IndexCartDeliverOptions, name: 'cart_deliver_options' },
+    { path: '/cart_payment_options', component: IndexCartPaymentOptions, name: 'cart_payment_options' },
+    { path: '/cart_entities', component: IndexCartEntities, name: 'cart_entities' },
+    { path: '/cart_products', component: IndexCartProducts, name: 'cart_products' },
+    { path: '/cart_product_orders', component: IndexCartProductOrders, name: 'cart_product_orders' },
 ]
 
 export const router = createRouter({
