@@ -74,6 +74,9 @@ export function useShoppingCart() {
     const Product = api('/api/v1/products', '/api/v1/product')
     const ProductEntity = api('/api/v1/product_entities', '/api/v1/product_entity')
     const ProductOrder = api('/api/v1/admin/product_orders', '/api/v1/admin/product_order')
+    const ProductOrderEntity = api('/api/v1/admin/product_order_entities', '/api/v1/admin/product_order_entity')
+    const ProductOrderState = api('/api/v1/admin/product_order_states', '/api/v1/admin/product_order_state')
+    const ProductEntityState = api('/api/v1/admin/product_entity_states', '/api/v1/admin/product_entity_state')
     const Health = {
         check: async () => {
             return await request(`/api/v1/admin/health`)
@@ -89,6 +92,9 @@ export function useShoppingCart() {
         Product,
         ProductOrder,
         ProductEntity,
+        ProductOrderEntity,
+        ProductOrderState,
+        ProductEntityState,
         Health
     }
 }

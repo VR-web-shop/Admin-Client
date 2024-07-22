@@ -95,52 +95,70 @@ const productsMenuItems = [
 
 const shoppingCartMenuItems = [
     {
-        title: 'Manage Carts',
-        description: 'Find, create, update, and delete carts',
+        title: 'Carts',
+        description: 'A cart is the main parent entity that holds all the product entities selected by the user. A cart is defined by a state and a link to a product order. Options: view, update, and create carts.',
         method: () => router.push('/carts'),
         permission: 'carts:index'
     },
     {
-        title: 'Manage Cart Product Entities',
-        description: 'Find, create, update, and delete cart product entities',
+        title: 'Cart Product Entities',
+        description: 'A cart product entity is a child entity of a cart. It holds a reference to a product entity and a cart. Options: view, delete, and create cart product entities.',
         method: () => router.push('/cart_product_entities'),
         permission: 'cart-product-entities:index'
     },
     {
-        title: 'Manage Cart States',
-        description: 'Find cart states',
+        title: 'Cart States',
+        description: 'A cart state defines the state of a cart. Options: View cart states.',
         method: () => router.push('/cart_states'),
         permission: 'cart-states:index'
     },
     {
-        title: 'Inspect Deliver Options',
-        description: 'Find deliver options',
+        title: 'Deliver Options',
+        description: 'A deliver option defines a type of delivery and its cost. Options: view deliver options.',
         method: () => router.push('/cart_deliver_options'),
         permission: 'deliver-options:index'
     },
     {
-        title: 'Inspect Payment Options',
-        description: 'Find payment options',
+        title: 'Payment Options',
+        description: 'A payment option defines a type of payment and its cost. Options: view payment options.',
         method: () => router.push('/cart_payment_options'),
         permission: 'payment-options:index'
     },
     {
-        title: 'Inspect Products',
-        description: 'Find products',
+        title: 'Products',
+        description: 'A product defines the general parameters of a product. Product entities can be created for a product to define an entity of the product a customer can buy. Options: view products.',
         method: () => router.push('/cart_products'),
         permission: 'products:index'
     },
     {
-        title: 'Inspect Product Entities',
-        description: 'Find product entities',
+        title: 'Product Entities',
+        description: 'A product entity defines a specific entity of a product a customer can buy. Options: view product entities.',
         method: () => router.push('/cart_entities'),
         permission: 'product-entities:index'
     },
     {
-        title: 'Inspect Product Orders',
-        description: 'Find product orders',
+        title: 'Product Entity States',
+        description: 'A product entity state defines the state of a product entity. Options: view product entity states.',
+        method: () => router.push('/cart_product_entity_states'),
+        permission: 'product-entity-states:index'
+    },
+    {
+        title: 'Product Orders',
+        description: 'A product order is created when a user decides to buy the products in their cart. A product order holds references to the product entities in the cart. Options: view product orders.',
         method: () => router.push('/cart_product_orders'),
         permission: 'product-orders:index'
+    },
+    {
+        title: 'Product Order Entity',
+        description: 'A product order entity holds a reference to a product entity and a product order. Options: view product order entities.',
+        method: () => router.push('/cart_product_order_entities'),
+        permission: 'product-order-entities:index'
+    },
+    {
+        title: 'Product Order States',
+        description: 'A product order state defines the state of a product order. Options: view product order states.',
+        method: () => router.push('/cart_product_order_states'),
+        permission: 'product-order-states:index'
     },
 ]
 
@@ -236,8 +254,8 @@ onMounted(async () => {
                 </div>
             </div>
 
-            <div v-if="filteredShoppingCartMenuItems.length > 0" class="pb-6 mb-4 border-b border-gray-300">
-                <div class="flex items-center justify-between gap-3 bg-slate-100 mb-3 p-3">
+            <div v-if="filteredShoppingCartMenuItems.length > 0" class="p-6 mb-6">
+                <div class="flex items-center justify-between gap-3 bg-slate-100 mb-6 p-3">
                     <h2 class="text-xl font-bold">
                         Shopping Cart Service
                     </h2>
@@ -273,11 +291,22 @@ onMounted(async () => {
                             </p>
                         </div>
                     </div>
+                    <div v-else>
+                        <p class="text-sm font-bold text-red-600">
+                            Service Inaccessible
+                        </p>
+                    </div>
                 </div>
                 
-                <p class="text-sm mb-6">
-                    The shopping cart service is responsible for managing the entities associated with shopping carts. Each shopping cart entity can hold multiple product entities, representing the items selected by the user. When the owner of a shopping cart decides to complete the purchase, the shopping cart service will generate a product order. This product order will consist of product order entities, each of which will reference the corresponding product entities within the shopping cart. This process ensures that all selected products are accurately included in the final order.
-                </p>
+                <div class="mb-6">
+                    <p class="text-sm mb-3">
+                        The shopping cart service is responsible for managing the entities associated with shopping carts. Each shopping cart entity can hold multiple product entities, representing the items selected by the user. When the owner of a shopping cart decides to complete the purchase, the shopping cart service will generate a product order. This product order will consist of product order entities, each of which will reference the corresponding product entities within the shopping cart. This process ensures that all selected products are accurately included in the final order.
+                    </p>
+
+                    <p class="text-sm">
+                        <strong>Managable items:</strong> Carts; Cart Product Entities;
+                    </p>
+                </div>
                 
                 <div class="grid grid-cols-3 gap-3">
                     <div v-for="item in filteredShoppingCartMenuItems" :key="item.title" @click="item.method">
