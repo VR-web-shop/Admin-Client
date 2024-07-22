@@ -69,10 +69,26 @@ export function useShoppingCart() {
     const Cart = api('/api/v1/admin/carts', '/api/v1/admin/cart')
     const CartProductEntity = api('/api/v1/admin/cart_product_entities', '/api/v1/admin/cart_product_entity')
     const CartState = api('/api/v1/admin/cart_states', '/api/v1/admin/cart_state')
+    const DeliverOption = api('/api/v1/deliver_options', '/api/v1/deliver_option')
+    const PaymentOption = api('/api/v1/payment_options', '/api/v1/payment_option')
+    const Product = api('/api/v1/products', '/api/v1/product')
+    const ProductEntity = api('/api/v1/product_entities', '/api/v1/product_entity')
+    const ProductOrder = api('/api/v1/admin/product_orders', '/api/v1/admin/product_order')
+    const Health = {
+        check: async () => {
+            return await request(`/api/v1/admin/health`)
+        }
+    }
 
     return {
         Cart,
         CartProductEntity,
-        CartState
+        CartState,
+        DeliverOption,
+        PaymentOption,
+        Product,
+        ProductOrder,
+        ProductEntity,
+        Health
     }
 }

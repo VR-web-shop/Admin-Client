@@ -1,9 +1,10 @@
 <script setup>
 import FlexCenter from '../components/UI/FlexCenter.vue';
 import Button from '../components/UI/Button.vue';
+import { useShoppingCart } from '../composables/useShoppingCart.js';
 import { useToast } from '../composables/useToast.js';
 import { useAuthSDK } from '../composables/useAuthSDK.js';
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { router } from '../router.js'
 
 const { sdk, authenticated } = useAuthSDK()
@@ -111,6 +112,36 @@ const shoppingCartMenuItems = [
         method: () => router.push('/cart_states'),
         permission: 'cart-states:index'
     },
+    {
+        title: 'Inspect Deliver Options',
+        description: 'Find deliver options',
+        method: () => router.push('/cart_deliver_options'),
+        permission: 'deliver-options:index'
+    },
+    {
+        title: 'Inspect Payment Options',
+        description: 'Find payment options',
+        method: () => router.push('/cart_payment_options'),
+        permission: 'payment-options:index'
+    },
+    {
+        title: 'Inspect Products',
+        description: 'Find products',
+        method: () => router.push('/cart_products'),
+        permission: 'products:index'
+    },
+    {
+        title: 'Inspect Product Entities',
+        description: 'Find product entities',
+        method: () => router.push('/cart_entities'),
+        permission: 'product-entities:index'
+    },
+    {
+        title: 'Inspect Product Orders',
+        description: 'Find product orders',
+        method: () => router.push('/cart_product_orders'),
+        permission: 'product-orders:index'
+    },
 ]
 
 const scenesMenuItems = [
@@ -150,6 +181,11 @@ const filteredScenesMenuItems = computed(() => {
     return filterMenuItems(scenesMenuItems)
 })
 
+const shoppingCartHealth = ref();
+const { check } = useShoppingCart().Health;
+onMounted(async () => {
+    shoppingCartHealth.value = await check();
+});
 </script>
 
 <template>
@@ -201,9 +237,48 @@ const filteredScenesMenuItems = computed(() => {
             </div>
 
             <div v-if="filteredShoppingCartMenuItems.length > 0" class="pb-6 mb-4 border-b border-gray-300">
-                <h2 class="text-md font-bold mb-3">
-                    Shopping Cart Management
-                </h2>
+                <div class="flex items-center justify-between gap-3 bg-slate-100 mb-3 p-3">
+                    <h2 class="text-xl font-bold">
+                        Shopping Cart Service
+                    </h2>
+
+                    <div v-if="shoppingCartHealth" class="flex gap-3 items-center">
+                        <div class="flex gap-1 items-center">
+                            <p class="text-sm font-bold">MySQL Connected:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md" 
+                                :class="shoppingCartHealth.mysql_connected == true ? 'text-green-600' : 'text-red-600'">
+                                {{ shoppingCartHealth.mysql_connected == true ? 'Yes' : 'No' }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">Message Broker Connected:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md" 
+                                :class="shoppingCartHealth.broker_connected == true ? 'text-green-600' : 'text-red-600'">
+                                {{ shoppingCartHealth.broker_connected == true ? 'Yes' : 'No' }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">API:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ shoppingCartHealth.api_type }}
+                            </p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ shoppingCartHealth.api_version }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">Exception Handler:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ shoppingCartHealth.exception_handler }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-sm mb-6">
+                    The shopping cart service is responsible for managing the entities associated with shopping carts. Each shopping cart entity can hold multiple product entities, representing the items selected by the user. When the owner of a shopping cart decides to complete the purchase, the shopping cart service will generate a product order. This product order will consist of product order entities, each of which will reference the corresponding product entities within the shopping cart. This process ensures that all selected products are accurately included in the final order.
+                </p>
+                
                 <div class="grid grid-cols-3 gap-3">
                     <div v-for="item in filteredShoppingCartMenuItems" :key="item.title" @click="item.method">
                         <button
