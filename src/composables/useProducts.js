@@ -277,6 +277,25 @@ export const useProducts = () => {
         'clientSideUUID name symbol symbol short active created_at updated_at'
     )
 
+    const Health = {
+        check: async () => {
+            const response = await postJSON(`{ health {
+                __typename
+                ... on Health {
+                    mysql_connected
+                    broker_connected
+                    api_type
+                    exception_handler
+                }
+                ... on RequestError {
+                    message
+                    code
+                }
+            }}`)
+            return response.data.health
+        }
+    }
+
     return {
         DeliverOption,
         PaymentOption,
@@ -286,6 +305,7 @@ export const useProducts = () => {
         ProductOrder,
         ProductOrderEntity,
         ProductOrderState,
-        ValutaSetting
+        ValutaSetting,
+        Health
     }
 }
