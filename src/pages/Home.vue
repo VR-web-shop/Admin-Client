@@ -2,6 +2,7 @@
 import FlexCenter from '../components/UI/FlexCenter.vue';
 import Button from '../components/UI/Button.vue';
 import { useShoppingCart } from '../composables/useShoppingCart.js';
+import { useProducts } from '../composables/useProducts.js';
 import { useToast } from '../composables/useToast.js';
 import { useAuthSDK } from '../composables/useAuthSDK.js';
 import { computed, onMounted, ref } from 'vue'
@@ -200,9 +201,11 @@ const filteredScenesMenuItems = computed(() => {
 })
 
 const shoppingCartHealth = ref();
-const { check } = useShoppingCart().Health;
+const productsHealth = ref();
+
 onMounted(async () => {
-    shoppingCartHealth.value = await check();
+    shoppingCartHealth.value = await useShoppingCart().Health.check();
+    productsHealth.value = await useProducts().Health.check();
 });
 </script>
 
@@ -220,10 +223,12 @@ onMounted(async () => {
                 Find the menu items below to manage your application.
             </p>
 
-            <div v-if="filteredAuthMenuItems.length > 0" class="pb-6 mb-4 border-b border-gray-300">
-                <h2 class="text-md font-bold mb-3">
-                    Authentication And Authorization
-                </h2>
+            <div v-if="filteredAuthMenuItems.length > 0" class="p-6 mb-6">
+                <div class="flex items-center justify-between gap-3 bg-slate-100 mb-6 p-3">
+                    <h2 class="text-xl font-bold">
+                        Auth Service
+                    </h2>
+                </div>
                 <div class="grid grid-cols-3 gap-3">
                     <div v-for="item in filteredAuthMenuItems" :key="item.title" @click="item.method">
                         <button
@@ -237,10 +242,58 @@ onMounted(async () => {
                 </div>
             </div>
 
-            <div v-if="filteredProductsMenuItems.length > 0" class="pb-6 mb-4 border-b border-gray-300">
-                <h2 class="text-md font-bold mb-3">
-                    Products Management
-                </h2>
+            <div v-if="filteredProductsMenuItems.length > 0" class="p-6 mb-6">
+                <div class="flex items-center justify-between gap-3 bg-slate-100 mb-6 p-3">
+                    <h2 class="text-xl font-bold">
+                        Products Service
+                    </h2>
+
+                    <div v-if="productsHealth" class="flex gap-3 items-center">
+                        <div class="flex gap-1 items-center">
+                            <p class="text-sm font-bold">MySQL Connected:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md" 
+                                :class="productsHealth.mysql_connected == true ? 'text-green-600' : 'text-red-600'">
+                                {{ productsHealth.mysql_connected == true ? 'Yes' : 'No' }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">Message Broker Connected:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md" 
+                                :class="productsHealth.broker_connected == true ? 'text-green-600' : 'text-red-600'">
+                                {{ productsHealth.broker_connected == true ? 'Yes' : 'No' }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">API:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ productsHealth.api_type }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">Exception Handler:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ productsHealth.exception_handler }}
+                            </p>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <p class="text-sm font-bold text-red-600">
+                            Service Inaccessible
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <p class="text-sm mb-3">
+                        
+The products service is responsible for managing product entities, each of which represents a specific item available for purchase by a customer. Each product entity is linked to a product, which defines the general attributes of the item. Additionally, the products service handles product orders, which are created when a user decides to purchase the items in their cart. A product order contains references to the product entities in the cart, ensuring that all selected items are accurately included in the final order.                        
+                    </p>
+
+                    <p class="text-sm">
+                        <strong>Managable items:</strong> Products; Product Entities; Product Orders; Product Order Entities; Payment Options; Deliver Options; Valuta Settings;
+                    </p>
+                </div>
+
                 <div class="grid grid-cols-3 gap-3">
                     <div v-for="item in filteredProductsMenuItems" :key="item.title" @click="item.method">
                         <button
@@ -321,10 +374,12 @@ onMounted(async () => {
                 </div>
             </div>
 
-            <div v-if="filteredScenesMenuItems.length > 0" class="">
-                <h2 class="text-md font-bold mb-3">
-                    3D Scenes Management
-                </h2>
+            <div v-if="filteredScenesMenuItems.length > 0" class="p-6">
+                <div class="flex items-center justify-between gap-3 bg-slate-100 mb-6 p-3">
+                    <h2 class="text-xl font-bold">
+                        Scenes Service
+                    </h2>
+                </div>
                 <div class="grid grid-cols-3 gap-3">
                     <div v-for="item in filteredScenesMenuItems" :key="item.title" @click="item.method">
                         <button
