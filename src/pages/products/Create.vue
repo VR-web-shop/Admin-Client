@@ -6,10 +6,10 @@
         :provideFormData="true"
         :submit="submit"
     >
-        <input type="text" placeholder="Name" name="name" ref="nameRef" class="w-full" />
-        <input type="text" placeholder="Description" name="description" ref="descRef" class="w-full" />
-        <input type="number" placeholder="Price" name="price" ref="priceRef" class="w-full" />
-        <input type="file" placeholder="File" name="file" ref="fileRef" class="w-full" />
+        <input type="text" placeholder="Name" name="name" ref="nameRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="text" placeholder="Description" name="description" ref="descRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="number" placeholder="Price" name="price" ref="priceRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="file" placeholder="File" name="file" ref="fileRef" class="p-3 w-full border border-gray-300 rounded-md" />
     </CreateTemplate>
 </template>
 <script setup>

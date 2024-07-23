@@ -30,7 +30,7 @@
                 </template>
 
                 <template #default="{ entities }">
-                    <table class="w-full border-l border-r border-gray-100">
+                    <table class="w-full border-l border-r border-gray-100 w-full">
                         <thead>
                             <tr class="border-b border-t border-gray-100 capitalize text-xs font-bold">
                                 <th v-for="key in keys" class="text-center p-3" :key="key">{{ key.replace(/_/, ' ') }}</th>

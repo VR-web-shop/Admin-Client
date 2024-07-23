@@ -5,12 +5,12 @@
         path="/product_orders"
         :submit="submit"
     >
-        <input type="text" placeholder="Name" name="name" ref="nameRef" class="w-full" />
-        <input type="email" placeholder="Email" name="email" ref="emailRef" class="w-full" />
-        <input type="text" placeholder="Address" name="address" ref="addressRef" class="w-full" />
-        <input type="text" placeholder="City" name="city" ref="cityRef" class="w-full" />
-        <input type="text" placeholder="Country" name="country" ref="countryRef" class="w-full" />
-        <input type="text" placeholder="Postal Code" name="postal_code" ref="postalCodeRef" class="w-full" />
+        <input type="text" placeholder="Name" name="name" ref="nameRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="email" placeholder="Email" name="email" ref="emailRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="text" placeholder="Address" name="address" ref="addressRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="text" placeholder="City" name="city" ref="cityRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="text" placeholder="Country" name="country" ref="countryRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="text" placeholder="Postal Code" name="postal_code" ref="postalCodeRef" class="p-3 w-full border border-gray-300 rounded-md" />
         <MeteorPaginator :findAllMethod="deliverOptionFindAll" :limit="10">
             <template #empty?>
                 <div class="text-center text-gray-500">

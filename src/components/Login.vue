@@ -9,12 +9,12 @@
 
                 <InputControl>
                     <label for="email" class="block mb-1">E-mail</label>
-                    <input type="email" placeholder="E-mail" v-model="email" />
+                    <input type="email" placeholder="E-mail" v-model="email" class="p-3 w-full border border-gray-300 rounded-md" />
                 </InputControl>
 
                 <InputControl>
                     <label for="password" class="block mb-1">Password</label>
-                    <input type="password" placeholder="Password" v-model="password" />
+                    <input type="password" placeholder="Password" v-model="password" class="p-3 w-full border border-gray-300 rounded-md" />
                 </InputControl>
 
                 <Button type="submit" class="w-full">Login</Button>

@@ -7,9 +7,9 @@
         :submit="submit"
         :entity="entity"
     >
-    <input type="text" name="name" placeholder="Name" class="input" ref="nameRef" />
-    <input type="text" name="short" placeholder="Short" class="input" ref="shortRef" />
-    <input type="text" name="symbol" placeholder="Symbol" class="input" ref="symbolRef" />
+    <input type="text" name="name" placeholder="Name" class="p-3 w-full border border-gray-300 rounded-md" ref="nameRef" />
+    <input type="text" name="short" placeholder="Short" class="p-3 w-full border border-gray-300 rounded-md" ref="shortRef" />
+    <input type="text" name="symbol" placeholder="Symbol" class="p-3 w-full border border-gray-300 rounded-md" ref="symbolRef" />
     <div class="flex items-center justify-start gap-2">
         <label for="active" class="text-sm">Active</label>
         <input type="checkbox" name="active" class="input" ref="activeRef" />

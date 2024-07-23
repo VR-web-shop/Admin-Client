@@ -5,8 +5,8 @@
         path="/payment_options"
         :submit="submit"
     >
-    <input type="text" name="name" placeholder="Name" class="input" />
-    <input type="number" name="price" placeholder="Price" class="input" />
+    <input type="text" name="name" placeholder="Name" class="p-3 w-full border border-gray-300 rounded-md" />
+    <input type="number" name="price" placeholder="Price" class="p-3 w-full border border-gray-300 rounded-md" />
     </CreateTemplate>
 </template>
 <script setup>

@@ -7,10 +7,10 @@
         :submit="submit"
         :entity="entity"
     >
-        <input type="text" name="first_name" placeholder="First name" ref="firstNameRef" class="input" />
-        <input type="text" name="last_name" placeholder="Last name" ref="lastNameRef" class="input" />
-        <input type="email" name="email" placeholder="Email" ref="emailRef" class="input" />
-        <input type="password" name="password" placeholder="Password" ref="passwordRef" class="input" />
+        <input type="text" name="first_name" placeholder="First name" ref="firstNameRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="text" name="last_name" placeholder="Last name" ref="lastNameRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="email" name="email" placeholder="Email" ref="emailRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="password" name="password" placeholder="Password" ref="passwordRef" class="p-3 w-full border border-gray-300 rounded-md" />
         <MeteorPaginator :findAllMethod="findAllRoles" :limit="10">
 
             <template #empty?>

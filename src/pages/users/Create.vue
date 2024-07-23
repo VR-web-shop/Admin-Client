@@ -5,10 +5,10 @@
         path="/users"
         :submit="submit"
     >
-        <input type="text" name="first_name" placeholder="First name" class="input" />
-        <input type="text" name="last_name" placeholder="Last name" class="input" />
-        <input type="email" name="email" placeholder="Email" class="input" />
-        <input type="password" name="password" placeholder="Password" class="input" />
+        <input type="text" name="first_name" placeholder="First name" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="text" name="last_name" placeholder="Last name" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="email" name="email" placeholder="Email" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="password" name="password" placeholder="Password" class="p-3 w-full border border-gray-300 rounded-md" />
         <MeteorPaginator :findAllMethod="findAllRoles" :limit="10">
 
             <template #empty?>

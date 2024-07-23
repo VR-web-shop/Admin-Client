@@ -7,8 +7,8 @@
         :submit="submit"
         :entity="entity"
     >
-        <input type="text" name="name" placeholder="Name" ref="nameRef" class="input" />
-        <input type="text" name="description" placeholder="Description" ref="descriptionRef" class="input" />
+        <input type="text" name="name" placeholder="Name" ref="nameRef" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="text" name="description" placeholder="Description" ref="descriptionRef" class="p-3 w-full border border-gray-300 rounded-md" />
     </UpdateTemplate>
 </template>
 
