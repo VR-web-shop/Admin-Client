@@ -4,12 +4,12 @@ import Button from '../components/UI/Button.vue';
 import { useShoppingCart } from '../composables/useShoppingCart.js';
 import { useProducts } from '../composables/useProducts.js';
 import { useScenes } from '../composables/useScenes.js';
-import { useToast } from '../composables/useToast.js';
+import { useWebsockets } from '../composables/useWebsockets.js';
 import { useAuthSDK } from '../composables/useAuthSDK.js';
 import { computed, onMounted, ref } from 'vue'
 import { router } from '../router.js'
 
-const { sdk, authenticated } = useAuthSDK()
+const { sdk } = useAuthSDK()
 
 const authMenuItems = [
     {
@@ -176,6 +176,17 @@ const scenesMenuItems = [
         },
         permission: 'scenes-editor:client:access'
     },
+    {
+        title: 'Scene VR Client',
+        description: 'Use the scene VR client to view 3D scenes in virtual reality.',
+        method: () => {
+            window.open(
+                import.meta.env.VITE_SCENES_VR_CLIENT_URL, 
+                '_blank'
+            )
+        },
+        permission: 'scenes-editor:client:access'
+    },
 ]
 
 const filterMenuItems = (menuItems) => {
@@ -205,6 +216,7 @@ const shoppingCartHealth = ref();
 const productsHealth = ref();
 const authHealth = ref();
 const scenesHealth = ref();
+const websockets = useWebsockets()
 
 onMounted(async () => {
     shoppingCartHealth.value = await useShoppingCart().Health.check();
@@ -447,6 +459,13 @@ onMounted(async () => {
                             <p class="text-xs font-bold border p-1 rounded-md" 
                                 :class="scenesHealth.elastic_connected == true ? 'text-green-600' : 'text-red-600'">
                                 {{ scenesHealth.elastic_connected == true ? 'Yes' : 'No' }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">Websocket Connected:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md" 
+                                :class="websockets.isConnected.value == true ? 'text-green-600' : 'text-red-600'">
+                                {{ websockets.isConnected.value == true ? 'Yes' : 'No' }}
                             </p>
                         </div>
                         <div class="flex gap-3 items-center">

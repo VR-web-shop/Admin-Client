@@ -86,7 +86,7 @@ export const useProducts = () => {
                 break
             }
         }
-        console.log(putParams)
+ 
         const find = async (pk) => {
             const response = await postJSON(`{ ${lowercasedSingularName}(${pkName}: "${pk}") {
                 __typename
