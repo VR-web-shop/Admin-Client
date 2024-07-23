@@ -12,26 +12,26 @@ const { sdk, authenticated } = useAuthSDK()
 
 const authMenuItems = [
     {
-        title: 'Manage Users',
-        description: 'Find, create, update, and delete users',
+        title: 'Users',
+        description: 'A user is an entity that can log in to the system. Options: view, create, update, and delete users.',
         method: () => router.push('/users'),
         permission: 'users:index'
     },
     {
-        title: 'Manage Roles',
-        description: 'Find, create, update, and delete roles',
+        title: 'Roles',
+        description: 'A role defines a set of permissions that can be assigned to a user. Options: view, create, update, and delete users.',
         method: () => router.push('/roles'),
         permission: 'roles:index'
     },
     {
-        title: 'Manage Role Permissions',
-        description: 'Find, create, update, and delete roles',
+        title: 'Role Permissions',
+        description: 'A role permission defines the relationship between a role and a permission. Options: view, create, update, and delete users.',
         method: () => router.push('/role_permissions'),
         permission: 'role-permissions:index'
     },
     {
-        title: 'Manage Permissions',
-        description: 'Find, create, update, and delete permissions',
+        title: 'Permissions',
+        description: 'A permission defines the access rights to a specific resource or action. Options: view, create, update, and delete users.',
         method: () => router.push('/permissions'),
         permission: 'permissions:index'
     },
@@ -39,56 +39,56 @@ const authMenuItems = [
 
 const productsMenuItems = [
     {
-        title: 'Manage Products',
-        description: 'Find, create, update, and delete products',
+        title: 'Products',
+        description: 'A product defines the general parameters of a product. Options: view, create, update, and delete products.',
         method: () => router.push('/products'),
         permission: 'products:index'
     },
     {
-        title: 'Manage Product Entities',
-        description: 'Find, create, update, ship, etc. product entities',
+        title: 'Product Entities',
+        description: 'A product entity defines a specific entity of a product a customer can buy. Options: view, create, update, and delete product entities.',
         method: () => router.push('/product_entities'),
         permission: 'product-entities:index'
     },
     {
-        title: 'Manage Product Entity States',
-        description: 'Find product entity states',
+        title: 'Product Entity States',
+        description: 'A product entity state defines the state of a product entity. Options: view product entity states.',
         method: () => router.push('/product_entity_states'),
         permission: 'product-entity-states:index'
     },
     {
-        title: 'Manage Product Orders',
-        description: 'Find, update, and delete product orders',
+        title: 'Product Orders',
+        description: 'A product order is created when a user decides to buy the products in their cart. A product order holds references to the product entities in the cart. Options: view, create, update, and delete product orders.',
         method: () => router.push('/product_orders'),
         permission: 'product-orders:index'
     },
     {
-        title: 'Manage Product Order Entities',
-        description: 'Find, create, update, ship, etc. product order entities',
+        title: 'Product Order Entities',
+        description: 'A product order entity holds a reference to a product entity and a product order. Options: view, create, update, and delete product order entities.',
         method: () => router.push('/product_order_entities'),
         permission: 'product-order-entities:index'
     },
     {
-        title: 'Manage Product Order States',
-        description: 'Find product order states',
+        title: 'Product Order States',
+        description: 'A product order state defines the state of a product order. Options: view product order states.',
         method: () => router.push('/product_order_states'),
         permission: 'product-order-states:index'
     },
     {
-        title: 'Manage Deliver Options',
-        description: 'Find deliver options',
+        title: 'Deliver Options',
+        description: 'A deliver option defines a type of delivery and its cost. Options: view, create, update, and delete deliver options.',
         method: () => router.push('/deliver_options'),
         permission: 'deliver-options:index'
     },
     {
-        title: 'Manage Payment Options',
-        description: 'Find payment options',
+        title: 'Payment Options',
+        description: 'A payment option defines a type of payment and its cost. Options: view, create, update, and delete payment options.',
         method: () => router.push('/payment_options'),
         permission: 'payment-options:index'
     },
     {
-        title: 'Manage Valuta Settings',
-        description: 'Find valuta settings',
+        title: 'Valuta Settings',
+        description: 'A valuta setting defines the currency and exchange rate for a specific valuta. Options: view, create, update, and delete valuta settings.',
         method: () => router.push('/valuta_settings'),
         permission: 'valuta-settings:index'
     }
@@ -165,8 +165,8 @@ const shoppingCartMenuItems = [
 
 const scenesMenuItems = [
     {
-        title: 'Manage 3D Scenes',
-        description: 'Find product entity states',
+        title: '3D Scene Editor',
+        description: 'Use the 3D scene editor to create and manage 3D scenes for your application.',
         method: () => {
             window.open(
                 import.meta.env.VITE_SCENES_EDITOR_CLIENT_URL, 
@@ -202,33 +202,79 @@ const filteredScenesMenuItems = computed(() => {
 
 const shoppingCartHealth = ref();
 const productsHealth = ref();
+const authHealth = ref();
 
 onMounted(async () => {
     shoppingCartHealth.value = await useShoppingCart().Health.check();
     productsHealth.value = await useProducts().Health.check();
+    authHealth.value = await sdk.api.adminHealth.check();
+    
 });
 </script>
 
 <template>
     <FlexCenter>
         <div class="m-10 p-3 w-full shadow-md bg-white rounded">
-            <div class="flex justify-between items-center">
-                <h1 class="text-xl font-bold">
-                    Control Panel
-                </h1>
-            </div>
+            <div class="p-6">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-3xl font-bold mb-3">
+                        Control Panel
+                    </h1>
+                </div>
 
-            <p class="mb-3 text-sm">
-                Welcome to the control panel. <br />
-                Find the menu items below to manage your application.
-            </p>
+                <p class="text-sm">
+                    Welcome to the control panel. <br />
+                    Find the menu items below to manage your application.
+                </p>
+            </div>
 
             <div v-if="filteredAuthMenuItems.length > 0" class="p-6 mb-6">
                 <div class="flex items-center justify-between gap-3 bg-slate-100 mb-6 p-3">
                     <h2 class="text-xl font-bold">
                         Auth Service
                     </h2>
+
+                    <div v-if="shoppingCartHealth" class="flex gap-3 items-center">
+                        <div class="flex gap-1 items-center">
+                            <p class="text-sm font-bold">MySQL Connected:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md" 
+                                :class="authHealth.mysql_connected == true ? 'text-green-600' : 'text-red-600'">
+                                {{ authHealth.mysql_connected == true ? 'Yes' : 'No' }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">API:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ authHealth.api_type }}
+                            </p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ authHealth.api_version }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">Exception Handler:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ authHealth.exception_handler }}
+                            </p>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <p class="text-sm font-bold text-red-600">
+                            Service Inaccessible
+                        </p>
+                    </div>
                 </div>
+
+                <div class="mb-6">
+                    <p class="text-sm mb-3">
+                        The auth service is responsible for managing the entities associated with user authentication and authorization. This service includes the management of users, roles, permissions, and role permissions. Users can be assigned roles, which in turn grant them specific permissions. Permissions can be assigned to roles, allowing users with those roles to access specific resources or perform certain actions. Role permissions define the relationship between roles and permissions, ensuring that users are granted the appropriate access rights based on their assigned roles.
+                    </p>
+
+                    <p class="text-sm">
+                        <strong>Managable items:</strong> Users; Roles; Role Permissions; Permissions;
+                    </p>
+                </div>
+
                 <div class="grid grid-cols-3 gap-3">
                     <div v-for="item in filteredAuthMenuItems" :key="item.title" @click="item.method">
                         <button
@@ -285,8 +331,7 @@ onMounted(async () => {
 
                 <div class="mb-6">
                     <p class="text-sm mb-3">
-                        
-The products service is responsible for managing product entities, each of which represents a specific item available for purchase by a customer. Each product entity is linked to a product, which defines the general attributes of the item. Additionally, the products service handles product orders, which are created when a user decides to purchase the items in their cart. A product order contains references to the product entities in the cart, ensuring that all selected items are accurately included in the final order.                        
+                        The products service is responsible for managing product entities, each of which represents a specific item available for purchase by a customer. Each product entity is linked to a product, which defines the general attributes of the item. Additionally, the products service handles product orders, which are created when a user decides to purchase the items in their cart. A product order contains references to the product entities in the cart, ensuring that all selected items are accurately included in the final order.                        
                     </p>
 
                     <p class="text-sm">
@@ -380,6 +425,13 @@ The products service is responsible for managing product entities, each of which
                         Scenes Service
                     </h2>
                 </div>
+
+                <div class="mb-6">
+                    <p class="text-sm mb-3">
+                        The scenes service provides a 3D scene editor that allows you to create and manage 3D scenes for your application. You can use the editor to design custom scenes, add objects, and define checkout and products. The scenes service is ideal for creating immersive experiences and visualizations that enhance user engagement and interactivity.
+                    </p>
+                </div>
+
                 <div class="grid grid-cols-3 gap-3">
                     <div v-for="item in filteredScenesMenuItems" :key="item.title" @click="item.method">
                         <button
