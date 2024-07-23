@@ -7,8 +7,8 @@
         :submit="submit"
         :entity="entity"
     >
-        <input type="text" name="name" ref="nameRef" placeholder="Name" class="input" />
-        <input type="number" name="price" ref="priceRef" placeholder="Price" class="input" />
+        <input type="text" name="name" ref="nameRef" placeholder="Name" class="p-3 w-full border border-gray-300 rounded-md" />
+        <input type="number" name="price" ref="priceRef" placeholder="Price" class="p-3 w-full border border-gray-300 rounded-md" />
     </UpdateTemplate>
 </template>
 

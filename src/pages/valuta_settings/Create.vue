@@ -5,9 +5,9 @@
         path="/valuta_settings"
         :submit="submit"
     >
-    <input type="text" name="name" placeholder="Name" class="input" />
-    <input type="text" name="short" placeholder="Short" class="input" />
-    <input type="text" name="symbol" placeholder="Symbol" class="input" />
+    <input type="text" name="name" placeholder="Name" class="p-3 w-full border border-gray-300 rounded-md" />
+    <input type="text" name="short" placeholder="Short" class="p-3 w-full border border-gray-300 rounded-md" />
+    <input type="text" name="symbol" placeholder="Symbol" class="p-3 w-full border border-gray-300 rounded-md" />
     <div class="flex items-center justify-start gap-2">
         <label for="active" class="text-sm">Active</label>
         <input type="checkbox" name="active" class="input" />
