@@ -1,19 +1,29 @@
 <template>
     <FlexCenter class="h-screen">
-        <div v-if="!showIntro" class="bg-white p-3 rounded border border-gray-300 shadow-md">
-            <Title>Login</Title>
-            <form @submit.prevent="submit">
+        <div v-if="!showIntro" class="bg-white p-6 rounded border border-gray-300 shadow-md">
+            <h1 class="text-center text-3xl mb-1">Admin Client</h1>
+            <p class="text-center text-sm mb-6">
+                Please enter your credentials to login.
+            </p>
+            <form @submit.prevent="submit" class="mb-6">
 
                 <InputControl>
+                    <label for="email" class="block mb-1">E-mail</label>
                     <input type="email" placeholder="E-mail" v-model="email" />
                 </InputControl>
 
                 <InputControl>
+                    <label for="password" class="block mb-1">Password</label>
                     <input type="password" placeholder="Password" v-model="password" />
                 </InputControl>
 
-                <Button type="submit">Login</Button>
+                <Button type="submit" class="w-full">Login</Button>
             </form>
+
+            <div class="text-center mt-4 flex flex-col gap-3">
+                <a :href="scenesVrClientURL" target="_blank" class="text-blue-500">Customer Website</a>
+                <a :href="scenesEditorClientURL" target="_blank" class="text-blue-500">3D Scene Editor</a>
+            </div>
         </div>
 
         <Transition name="fade-in">
@@ -39,9 +49,12 @@ import { ref, defineEmits } from 'vue';
 import { useToast } from '../composables/useToast.js';
 import { useAuthSDK } from '../composables/useAuthSDK.js';
 
+const scenesVrClientURL = import.meta.env.VITE_SCENES_VR_CLIENT_URL;
+const scenesEditorClientURL = import.meta.env.VITE_SCENES_EDITOR_CLIENT_URL;
+
 const emits = defineEmits(['complete']);
-const email = ref('userAdmin@example.com');
-const password = ref('126345678');
+const email = ref('');
+const password = ref('');
 const showIntro = ref(null);
 const introMsg = ref('')
 const introShowTime = 6000;
