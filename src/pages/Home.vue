@@ -3,6 +3,7 @@ import FlexCenter from '../components/UI/FlexCenter.vue';
 import Button from '../components/UI/Button.vue';
 import { useShoppingCart } from '../composables/useShoppingCart.js';
 import { useProducts } from '../composables/useProducts.js';
+import { useScenes } from '../composables/useScenes.js';
 import { useToast } from '../composables/useToast.js';
 import { useAuthSDK } from '../composables/useAuthSDK.js';
 import { computed, onMounted, ref } from 'vue'
@@ -203,12 +204,13 @@ const filteredScenesMenuItems = computed(() => {
 const shoppingCartHealth = ref();
 const productsHealth = ref();
 const authHealth = ref();
+const scenesHealth = ref();
 
 onMounted(async () => {
     shoppingCartHealth.value = await useShoppingCart().Health.check();
     productsHealth.value = await useProducts().Health.check();
     authHealth.value = await sdk.api.adminHealth.check();
-    
+    scenesHealth.value = await useScenes().Health.check();
 });
 </script>
 
@@ -234,7 +236,7 @@ onMounted(async () => {
                         Auth Service
                     </h2>
 
-                    <div v-if="shoppingCartHealth" class="flex gap-3 items-center">
+                    <div v-if="authHealth" class="flex gap-3 items-center">
                         <div class="flex gap-1 items-center">
                             <p class="text-sm font-bold">MySQL Connected:</p>
                             <p class="text-xs font-bold border p-1 rounded-md" 
@@ -424,6 +426,50 @@ onMounted(async () => {
                     <h2 class="text-xl font-bold">
                         Scenes Service
                     </h2>
+
+                    <div v-if="scenesHealth" class="flex gap-3 items-center">
+                        <div class="flex gap-1 items-center">
+                            <p class="text-sm font-bold">MySQL Connected:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md" 
+                                :class="scenesHealth.mysql_connected == true ? 'text-green-600' : 'text-red-600'">
+                                {{ scenesHealth.mysql_connected == true ? 'Yes' : 'No' }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">Message Broker Connected:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md" 
+                                :class="scenesHealth.broker_connected == true ? 'text-green-600' : 'text-red-600'">
+                                {{ scenesHealth.broker_connected == true ? 'Yes' : 'No' }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">Elasticsearch Connected:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md" 
+                                :class="scenesHealth.elastic_connected == true ? 'text-green-600' : 'text-red-600'">
+                                {{ scenesHealth.elastic_connected == true ? 'Yes' : 'No' }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">API:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ scenesHealth.api_type }}
+                            </p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ scenesHealth.api_version }}
+                            </p>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <p class="text-sm font-bold">Exception Handler:</p>
+                            <p class="text-xs font-bold border p-1 rounded-md">
+                                {{ scenesHealth.exception_handler }}
+                            </p>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <p class="text-sm font-bold text-red-600">
+                            Service Inaccessible
+                        </p>
+                    </div>
                 </div>
 
                 <div class="mb-6">
